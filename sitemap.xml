@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://tech.coderhuo.tech/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/categories/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/tags/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/archives/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/about/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/posts/javascript_this_and_callback/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/posts/linux_capability_example/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/posts/dead_lock_after_fork/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/tags/capability/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/tags/fork/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/tags/javascript/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/tags/%E5%AE%89%E5%85%A8/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/tags/%E6%AD%BB%E9%94%81/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tech.coderhuo.tech/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
+  <lastmod>2025-03-22T16:14:35+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
