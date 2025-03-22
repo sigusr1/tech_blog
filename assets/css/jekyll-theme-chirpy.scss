@@ -1,0 +1,38 @@
+---
+---
+
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+// Begin custom language-console block style
+.language-console.highlighter-rouge {
+  background-color: rgb(22, 22, 22);
+  color: rgb(177, 177, 177);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.language-console.highlighter-rouge .code-header,
+.language-console.highlighter-rouge .highlight {
+  background-color: transparent;
+
+}
+
+.language-console.highlighter-rouge .rouge-code {
+  background-color: transparent;
+  color: #b0b0b0;
+}
+
+div[class^=language-console] .code-header::before
+{
+  background-color: #aded0c;
+  // width: 0; // if set to 0, it will disappear
+  box-shadow: 1.25rem 0 0 #aded0c, 2.5rem 0 0 #aded0c
+}
+
+// End custom language-console block style
