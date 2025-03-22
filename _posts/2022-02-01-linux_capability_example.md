@@ -34,21 +34,21 @@ tags:  [capability, 安全]
 
 - 添加两个用户，分别用于主进程和子进程
 
-```
+```console
 sudo adduser master
 sudo adduser slave
 ```
 
 - 创建一个仅当前用户可读写的测试文件：
 
-```
+```console
 echo "Only current user can open me" > ~/test.txt
 chmod 600 ~/test.txt 
 ```
 
 - 通过下面的命令可以看到，仅当前用户huo对该文件具有读写权限：
 
-```
+```console
 ls -l ~/test.txt
 -rw------- 1 huo huo 26 1月  30 16:44 /home/huo/test.txt
 ```
@@ -58,14 +58,14 @@ ls -l ~/test.txt
 
 - 编译测试代码：
 
-```
+```console
 gcc cap.c -lcap -lpthread
 ```
 注：依赖libcap，`ubuntu`可通过命令`sudo apt install libcap-dev`命令安装。
 
 - 运行编译出来的可执行程序，由于需要修改caps相关能力，需要特权模式运行：
 
-```
+```console
 sudo ./a.out
 ```
 
@@ -75,7 +75,7 @@ sudo ./a.out
 - 子线程6757因为是在清理权限后创建的，不再具有CAP_DAC_OVERRIDE权限，所以无法访问目标文件
 
 
-```
+```console
 main:235 pid:6755 tid:6755 Fail to open file. error:Permission denied
 test_in_child_thread:182 pid:6755 tid:6756 Success to open file.
 test_in_child_thread:182 pid:6755 tid:6757 Fail to open file. error:Permission denied

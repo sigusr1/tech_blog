@@ -43,7 +43,7 @@ a.triggerEvent();
 在onEvent中打印下`this`，可以看到，它指向的是对象`a`而不是`b`:
 
 
-```
+```console
 A { callback: [Function: onEvent] }
 ```
 
@@ -51,13 +51,13 @@ A { callback: [Function: onEvent] }
 
 可以在注册回调的时候，调用`bind`函数强制进行强制绑定，将下面的代码:
 
-```
+```js
 a.setEventListener(this.onEvent);
 ```
 
 改成：
 
-```
+```js
 a.setEventListener(this.onEvent.bind(this));
 ```
 
