@@ -54,7 +54,7 @@ ls -l ~/test.txt
 ```
 
 - 测试代码如下：  
-  [cap.c](https://github.com/sigusr1/file_server/blob/main/2022-02-01-linux_capability_example/cap.c)
+  [cap.c](https://github.com/sigusr1/blog_assets/blob/master/2022-02-01-linux_capability_example/cap.c)
 
 - 编译测试代码：
 
