@@ -16,6 +16,7 @@ tags: [共享内存, hash]
 
 
 初步想法是将整块共享内存划分成一个下标为0~n的数组，如下图所示。数据Record的key经过Hash计算后得到hashcode，然后将该值映射为数组的下标，直接通过下标访问数组，将Record的key和value存储在对应的位置。
+
 ![分区示意图](https://github.com/sigusr1/blog_assets/blob/master/2021-08-01-hash_in_shared_memory/split_region_by_record.png?raw=true)
 
 但是Hash存在冲突的情况，即两个不同的Record经过Hash映射，得到的下标可能是相同的。  
