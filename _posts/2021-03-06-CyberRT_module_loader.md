@@ -29,7 +29,7 @@ Dag文件是module的配置文件，由protocolbuffers文件`cyber/proto/dag_con
 - module_library指明了要加载的动态库。
 - 这个module只有一个component，该component对应的class_name是`CommonComponentSample`，和`common_component_example.h`中的定义要一致。 
 
-  ```proto
+  ```
   # Define all coms in DAG streaming.
       module_config {
       module_library : "/apollo/bazel-bin/cyber/examples/common_component_example/libcommon_component_example.so"
