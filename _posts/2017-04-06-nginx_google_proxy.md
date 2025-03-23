@@ -98,6 +98,6 @@ sudo /usr/local/nginx/sbin/nginx
 ## 8. 参考文档 ##
 <https://www.meanevo.com/2015/08/20/mirrors-google-on-nginx/>  
 
-<http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html>  
+<https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html>  
 
 <https://github.com/sigusr1/ph-ddns.git>  
