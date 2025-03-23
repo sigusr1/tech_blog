@@ -1,8 +1,8 @@
 ---
 title: "可怕的extern关键字"  
 date:   2017-04-03  
-categories: [编程语言]  
-tags: 【extern, 计算机基础] 
+categories: [编程语言]
+tags: 【extern, 计算机基础]
 ---
 
 实际项目中看到有人用extern关键字来声明外部函数，这是一个很不好的行为。
