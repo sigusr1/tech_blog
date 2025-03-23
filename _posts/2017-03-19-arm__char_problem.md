@@ -1,7 +1,7 @@
 ---
 title: "ARM下char类型符号问题"
 date:   2017-03-19  
-categories: [操作系统]  
+categories: [编程语言]  
 tags: [计算机基础, arm]  
 ---
 
