@@ -2,9 +2,7 @@
 title: "Nginx反向代理，建立Google镜像"
 date: 2017-04-16
 categories: [工具]
-tags: [环境搭建, nginx, Google代理]
-author: coderhuo  
-mathjax: true  
+tags: [nginx, Google代理]
 ---
 
 本文简要介绍基于Nginx反向代理，建立Google镜像的步骤。
@@ -35,6 +33,10 @@ pcre版本不要太新，否则后面编译会有问题。
 进入ngx_http_substitutions_filter_module目录，执行```git checkout v0.6.4```选定版本  
 
 解压其他压缩包后，在nginx根目录下编译安装：
+- nginx默认安装目录是`/usr/local/`
+- 可执行文件`/usr/local/nginx/sbin/nginx`
+- 配置文件`/usr/local/nginx/conf/nginx.conf`
+
 
 ```console
  ./auto/configure --with-pcre=../pcre-8.39 --with-openssl=../openssl-OpenSSL_1_1_0e --with-zlib=../zlib-1.2.11 --with-http_ssl_module --add-module=../ngx_http_google_filter_module --add-module=../ngx_http_substitutions_filter_module
@@ -44,9 +46,6 @@ make -j 4
 sudo make install
 ```
 
-nginx默认安装目录是/usr/local/， 
-可执行文件/usr/local/nginx/sbin/nginx，
-配置文件/usr/local/nginx/conf/nginx.conf
 
 ## 4. 修改nginx配置文件 ##
 
