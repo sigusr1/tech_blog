@@ -2,7 +2,7 @@
 title: "curl交叉编译方法"
 date: 2017-06-04 23:40:18 +0800
 categories: [开源软件]
-tags: 【curl】
+tags: [curl]
 ---
 
 本文主要介绍arm平台curl交叉编译方法。
