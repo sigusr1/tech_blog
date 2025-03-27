@@ -23,7 +23,7 @@ sudo apt-get install gcc-arm-linux-gnueabihf
 安装完毕，可以看到系统上已经新增了这么多交叉编译工具：  
 
 ```console
-helloworld@ubuntu:~$ arm-linux-gnueabihf-
+helloworld@ubuntu:~$arm-linux-gnueabihf-
 arm-linux-gnueabihf-addr2line     arm-linux-gnueabihf-gcov-7
 arm-linux-gnueabihf-ar            arm-linux-gnueabihf-gcov-dump
 arm-linux-gnueabihf-as            arm-linux-gnueabihf-gcov-dump-7
