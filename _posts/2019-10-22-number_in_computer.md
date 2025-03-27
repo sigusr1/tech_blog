@@ -333,7 +333,7 @@ b=-17=0xef, c=-12817=0xcdef
 ## 四、参考资料 ##
 
 1. [如何实现减法](https://www.jianshu.com/p/6bc33135e481)
-2. [arm指令集简介](http://users.ece.utexas.edu/~valvano/EE345M/Arm_EE382N_4.pdf)
+2. [arm指令集简介](https://users.ece.utexas.edu/~valvano/EE345M/Arm_EE382N_4.pdf)
 3. [arm状态寄存器](http://www-mdp.eng.cam.ac.uk/web/library/enginfo/mdp_micro/lecture3/lecture3-1.html)
 4. [arm中的比较指令cmp](http://www-mdp.eng.cam.ac.uk/web/library/enginfo/mdp_micro/lecture3/lecture3-2.html)
 5. [arm中的跳转指令](http://www-mdp.eng.cam.ac.uk/web/library/enginfo/mdp_micro/lecture3/lecture3-3-3.html)
