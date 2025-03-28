@@ -41,3 +41,8 @@ tags: [书籍分享]
 
 建议阅读，如果能在大学阶段精度最好。  
 有了一定的经验后回过头来再读这本书，也可以借机系统性梳理下相关知识。
+
+## 7. [《Go语言实践》](https://github.com/sigusr1/blog_assets/blob/master/books/tech/go/%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AE%9E%E6%88%98%E3%80%8B.pdf)
+
+《Go In Action》的中文版
+
