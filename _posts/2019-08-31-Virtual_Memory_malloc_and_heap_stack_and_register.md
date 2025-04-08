@@ -13,12 +13,11 @@ tags: [虚拟内存, 翻译]
 
 
 
-前几篇可以通过下面的链接查看：  
-
-- 第一篇:[虚拟内存探究 -- 第一篇:C strings & /proc](http://blog.coderhuo.tech/2017/10/12/Virtual_Memory_C_strings_proc/)
-- 第二篇:[虚拟内存探究 -- 第二篇:Python 字节](http://blog.coderhuo.tech/2017/10/15/Virtual_Memory_python_bytes/)
-- 第三篇:[虚拟内存探究 -- 第三篇:一步一步画虚拟内存图](http://blog.coderhuo.tech/2017/10/16/Virtual_Memory_drawing_VM_diagram/)
-- 第四篇:[虚拟内存探究 -- 第四篇:malloc, heap & the program break](http://blog.coderhuo.tech/2017/10/18/Virtual_Memory_malloc_and_heap/)
+- 第一篇:[虚拟内存探究 -- 第一篇:C strings & /proc](https://tech.coderhuo.tech/posts/Virtual_Memory_C_strings_proc/)
+- 第二篇:[虚拟内存探究 -- 第二篇:Python 字节](https://tech.coderhuo.tech/posts/Virtual_Memory_python_bytes/)
+- 第三篇:[虚拟内存探究 -- 第三篇:一步一步画虚拟内存图](https://tech.coderhuo.tech/posts/Virtual_Memory_drawing_VM_diagram/)
+- 第四篇:[虚拟内存探究 -- 第四篇:malloc, heap & the program break](https://tech.coderhuo.tech/posts/Virtual_Memory_malloc_and_heap/)
+- 第五篇:[虚拟内存探究 -- 第五篇:The Stack, registers and assembly code](https://tech.coderhuo.tech/posts/Virtual_Memory_malloc_and_heap_stack_and_register/)
  
 ## 一、栈 ##
 
@@ -649,11 +648,11 @@ int main(void)
 
 ## 八、继续阅读 ##
 
-- 第一篇:[虚拟内存探究 -- 第一篇:C strings & /proc](http://blog.coderhuo.tech/2017/10/12/Virtual_Memory_C_strings_proc/)
-- 第二篇:[虚拟内存探究 -- 第二篇:Python 字节](http://blog.coderhuo.tech/2017/10/15/Virtual_Memory_python_bytes/)
-- 第三篇:[虚拟内存探究 -- 第三篇:一步一步画虚拟内存图](http://blog.coderhuo.tech/2017/10/16/Virtual_Memory_drawing_VM_diagram/)
-- 第四篇:[虚拟内存探究 -- 第四篇:malloc, heap & the program break](http://blog.coderhuo.tech/2017/10/18/Virtual_Memory_malloc_and_heap/)
-- 第五篇：[虚拟内存探究 -- 第五篇:The Stack, registers and assembly code](http://blog.coderhuo.tech/2019/08/31/Virtual_Memory_malloc_and_heap_stack_and_register/)
+- 第一篇:[虚拟内存探究 -- 第一篇:C strings & /proc](https://tech.coderhuo.tech/posts/Virtual_Memory_C_strings_proc/)
+- 第二篇:[虚拟内存探究 -- 第二篇:Python 字节](https://tech.coderhuo.tech/posts/Virtual_Memory_python_bytes/)
+- 第三篇:[虚拟内存探究 -- 第三篇:一步一步画虚拟内存图](https://tech.coderhuo.tech/posts/Virtual_Memory_drawing_VM_diagram/)
+- 第四篇:[虚拟内存探究 -- 第四篇:malloc, heap & the program break](https://tech.coderhuo.tech/posts/Virtual_Memory_malloc_and_heap/)
+- 第五篇:[虚拟内存探究 -- 第五篇:The Stack, registers and assembly code](https://tech.coderhuo.tech/posts/Virtual_Memory_malloc_and_heap_stack_and_register/)
 
 ## 九、原文链接 ##
 [Hack the virtual memory, chapter 4: the stack, registers and assembly code](https://github.com/holbertonschool/Hack-The-Virtual-Memory/tree/master/04.%20The%20Stack%2C%20registers%20and%20assembly%20code)
