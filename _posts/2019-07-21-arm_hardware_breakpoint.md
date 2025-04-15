@@ -2,7 +2,7 @@
 title:  "如何利用硬件watchpoint定位踩内存问题"  
 date:   2019-07-21  
 categories: [操作系统]
-tags: [arm, watchpoint,踩内存]
+tags: [arm, watchpoint, 踩内存]
 ---
 
 * content
