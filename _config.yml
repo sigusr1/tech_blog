@@ -95,7 +95,8 @@ theme_mode: # [light | dark]
 # will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-cdn: https://github.com/sigusr1/blog_assets/blob/master/
+# cdn: https://github.com/sigusr1/blog_assets/blob/master/
+cdn: http://data.coderhuo.tech
 
 # the avatar on sidebar, support local or CORS resources
 avatar: wechat_qr/blog_header_logo.png?raw=true
