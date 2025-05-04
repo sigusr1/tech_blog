@@ -27,7 +27,7 @@ AVTP是个链路层传输协议，其主要作用有两个：
 
 AVTP是链路层的传输协议，并且是基于VLAN的，在以太网帧中的位置如下所示：    
 
-![AVTP报文格式](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/avtp_format.jpg?raw=true)
+![AVTP报文格式](/2020-04-12-avtp_summury/avtp_format.jpg?raw=true)
 
 针对不同的音视频格式，AVTP有不同的Header和Payload格式。（*注：AVTP的Header其实是分了几个层级的，包含通用部分和随音视频格式变化部分，这里不再详细介绍。*）  
 
@@ -37,7 +37,7 @@ AVTP是链路层的传输协议，并且是基于VLAN的，在以太网帧中的
 ### 1. 头部结构 ###
 下图是AVTP封装H264视频数据时的头部结构：  
 
-![H264_AVTP_Header](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/avtp_h264_header.jpg?raw=true)
+![H264_AVTP_Header](/2020-04-12-avtp_summury/avtp_h264_header.jpg?raw=true)
 
 我们结合实际报文重点关注图中编号了的几个字段，上图编号和下图抓包中的编号一一对应：
 1. subtype：AVTP子类型，本例为压缩视频格式，一般简称为CVF
@@ -51,7 +51,7 @@ AVTP是链路层的传输协议，并且是基于VLAN的，在以太网帧中的
 9. h264_timestamp: h264时间戳，后面专门介绍。
 10. ptv：用来指示h264_timestamp字段是否有效。本例中未填写h264_timestamp，所以ptv均为0（抓包中未标记）。
 
-![H264_AVTP_Header_wireshark](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/avtp_h264_header_wireshark.jpg?raw=true)
+![H264_AVTP_Header_wireshark](/2020-04-12-avtp_summury/avtp_h264_header_wireshark.jpg?raw=true)
 
 
 ### 2. payload结构 ###  
@@ -61,7 +61,7 @@ AVTP是链路层的传输协议，并且是基于VLAN的，在以太网帧中的
 #### 2.1 H264基础知识 ####
 H264帧由多个NALU单元组成，如下图所示，其中Start Code就是0x000001或0x00000001，NALU Header中包含该NALU的类型。
 
-![H264帧结构](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/frame_struct.jpg?raw=true)  
+![H264帧结构](/2020-04-12-avtp_summury/frame_struct.jpg?raw=true)  
 
 H264帧分为I帧、P帧、B帧三类，其中：  
 
@@ -76,7 +76,7 @@ H264帧分为I帧、P帧、B帧三类，其中：
 B帧使得解码顺序和显示顺序不再一致。记住这一点对后面理解AVTP中的两个时间戳有帮助。
 
 
-![B帧解码显示示意图](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/b_frame.jpg?raw=true)
+![B帧解码显示示意图](/2020-04-12-avtp_summury/b_frame.jpg?raw=true)
 
 
 #### 2.2 RTP基础知识 ####  
@@ -101,7 +101,7 @@ RTP包类型又包含以下几种：
 打包模式与包类型之间的关系如下，并不能随便使用：  
 
 
-![每种打包模式使用的rtp包类型](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/rtp_type.jpg?raw=true)
+![每种打包模式使用的rtp包类型](/2020-04-12-avtp_summury/rtp_type.jpg?raw=true)
 
 
 我们的视频数据是Non-interleaved mode模式，所以理论上可以使用上图中的NAL unit、STAP-A和FU-A三种包类型，但通常情况下不会把多个NALU聚合在一起发送（增加复杂度），所以实际只使用了NAL unit和FU-A两种包类型，前者用来封装较小不需要分片的NALU，后者用来封装需要分片的NALU。
@@ -111,7 +111,7 @@ RTP包类型又包含以下几种：
 AVTP的h264_payload是遵循RFC 6184规范（RTP Payload Format for H.264 Video）的。  
 前面提到，我们只使用了NAL unit和FU-A两种包类型，前者用来封装较小不需要分片的NALU（下图左半部分），后者用来封装需要分片的NALU（下图右半部分）。
 
-![AVTP封装](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/avtp_pack.jpg?raw=true)
+![AVTP封装](/2020-04-12-avtp_summury/avtp_pack.jpg?raw=true)
 
 ## 二、媒体同步 ##
 
@@ -124,12 +124,12 @@ AVTP Presentation Time的含义是呈现时间，表示接收方在该时刻需�
 
 *注：这个时间戳为什么要对gPTP时间做取模处理，规范中并未说明，猜测应该是为了节省字节。因为表示完整的gPTP时间需要占用10个字节，其中6字节用来表示秒，4字节用来表示纳秒，而现在只需要4字节即可。当然，该时间戳4秒就轮回了。*
 
-![AVTP Presentation Time定义](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/avtp_present_time.png?raw=true)
+![AVTP Presentation Time定义](/2020-04-12-avtp_summury/avtp_present_time.png?raw=true)
 
 
 那么，Max Transit Time是如何定义的呢？如下图所示，如果音频源到两个扬声器的传输时间分别是t1、t2，Max Transit Time就是二者中的最大值。  
 
-![Max Transit Time示意图](https://github.com/sigusr1/blog_assets/blob/master/2020-03-22-AVB_summury/avb_in_house.png?raw=true)  
+![Max Transit Time示意图](/2020-03-22-AVB_summury/avb_in_house.png?raw=true)  
 
 Max Transit Time的通用定义如下，其中tn为Talker到第n个Listener的最大传输时间。
 
@@ -137,12 +137,12 @@ Max Transit Time的通用定义如下，其中tn为Talker到第n个Listener的�
 
 接下来以H264为例讲解AVTP的媒体同步机制，下图是H264 Over AVTP典型的处理流程：  
 
-![avtp_timestamp示意图](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/avtp_timestamp.jpg?raw=true)
+![avtp_timestamp示意图](/2020-04-12-avtp_summury/avtp_timestamp.jpg?raw=true)
 
 ### 3.2 展示时间同步（播放时间同步） ###
 结合`AVTP Presentation Time`和`Max Transit Time`的定义，可以看到：它可以指示接收端在未来的某一时刻处理音视频数据；数据可以提前到（提前到的要等待，直到时刻AVTP Presentation Time到来才能被处理），但绝不能迟到（你说你在时间点AVTP Presentation Time到达，结果迟到了，只有被丢弃）。**就像是一次准时开始的会议，提前到的要等待会议开始，迟到者无法听到前面的内容**。在这种机制保障下，考虑下面的两个场景，是不是都可以达到同步效果？
 
-![同步播放示意图](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/Sync_by_avtp_timestamp.jpg?raw=true)  
+![同步播放示意图](/2020-04-12-avtp_summury/Sync_by_avtp_timestamp.jpg?raw=true)  
 
 ### 3.3 媒体时钟同步 ###
 
@@ -153,13 +153,13 @@ Max Transit Time的通用定义如下，其中tn为Talker到第n个Listener的�
 媒体时钟恢复，是指Listener根据AVTP Presentation Time重建媒体时钟，使之和采集端保持同步，进而指导音视频**以采集时的速率播放**，流程如下：
 
 1. AVTP假设网络中各个节点的媒体时钟都是自由运行的（也就是相互之间不同步）。为了便于接收端恢复媒体时钟，在发送端，Talker把媒体时钟嵌入在展示时间戳中的（采样点对应gPTP的某个时刻），如下图所示：  
-![talker_media_clock](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/talker_media_clock.png?raw=true)  
+![talker_media_clock](/2020-04-12-avtp_summury/talker_media_clock.png?raw=true)  
 
 2. 在接收端，媒体时钟从展示时间戳中恢复（AVTP Presentation Time和本地gPTP时间对比，二者同步的时刻对应一个Media Clock的采样点），进而控制音视频的播放。
-![listener_media_clock](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/listener_media_clock.png?raw=true)  
+![listener_media_clock](/2020-04-12-avtp_summury/listener_media_clock.png?raw=true)  
 
 3. 媒体时钟恢复模块示意图如下所示：  
-![媒体时钟恢复模块示意图](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/media_clock_recovery.gif?raw=true)
+![媒体时钟恢复模块示意图](/2020-04-12-avtp_summury/media_clock_recovery.gif?raw=true)
 
 AVTP中也可以定义专门的Media Clock Stream，用来同步相关节点的媒体时钟，这里不再展开介绍。
 
@@ -170,11 +170,11 @@ AVTP中有了展示时间戳，为什么还要加上h264_timestamp时间戳？
 在交叉编码模式（Interleaved mode）下，解码顺序和显示顺序是不一致的。如下图所示，视频数据是按照Frame0、Frame1的顺序依次采集的，接收端也要按这个顺序显示。  
 
 
-![采集顺序](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/pts.jpg?raw=true)  
+![采集顺序](/2020-04-12-avtp_summury/pts.jpg?raw=true)  
 
 但是，由于存在B帧，编码器实际的输出顺序如下，接收端也要按照下面的顺序解码：  
 
-![编码输出顺序](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/dts.jpg?raw=true)
+![编码输出顺序](/2020-04-12-avtp_summury/dts.jpg?raw=true)
 
 
 
@@ -188,4 +188,4 @@ AVTP中有了展示时间戳，为什么还要加上h264_timestamp时间戳？
 
 1. [H264 over RTP 的打包](https://blog.csdn.net/u010178611/article/details/82592393)
 2. [Understanding IEEE’s deterministic AV bridging standards](https://www.embedded.com/understanding-ieees-deterministic-av-bridging-standards/)
-3. [参考报文：gstream工具生成的报文](https://github.com/sigusr1/blog_assets/blob/master/2020-04-12-avtp_summury/gstream_avtp.pcap)
+3. [参考报文：gstream工具生成的报文](/2020-04-12-avtp_summury/gstream_avtp.pcap)

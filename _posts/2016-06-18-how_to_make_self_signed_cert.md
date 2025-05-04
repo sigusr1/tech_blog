@@ -127,13 +127,13 @@ openssl verify -CAfile rootCA.cer sever.cer
 
 双击sever.cer，可以看到证书验证失败，这是因为系统上没人为该证书背书：  
 
-![验证失败](https://github.com/sigusr1/blog_assets/blob/master/2016-06-18-how_to_make_self_signed_cert/sever_not_auth.png?raw=true)
+![验证失败](/2016-06-18-how_to_make_self_signed_cert/sever_not_auth.png?raw=true)
 
 双击rootCA.cer，点击下面的`安装证书`按钮，根据提示安装根证书（安装位置选择`安装到受信任的根证书颁发机构`）。根证书安装后，代表这台电脑无条件信任根证书，以及经由rootCA.cer签发的其他证书。  
 
 这时再打开sever.cer，如下图所示，已经验证成功（有rootCA.cer为他进行信任背书了):  
 
-![验证成功](https://github.com/sigusr1/blog_assets/blob/master/2016-06-18-how_to_make_self_signed_cert/sever_auth.png?raw=true)
+![验证成功](/2016-06-18-how_to_make_self_signed_cert/sever_auth.png?raw=true)
 
 
 ## 五、参考文档 ##

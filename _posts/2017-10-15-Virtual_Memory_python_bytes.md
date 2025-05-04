@@ -127,7 +127,7 @@ julien@holberton:~/holberton/w/hackthevm1$
 ```
 
 **什么？？？**  
-![**这不可能！！！**](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/giphy-4.gif?raw=true)
+![**这不可能！！！**](/virtual_memory/giphy-4.gif?raw=true)
 
 我们找到字符串`Holberton`并且替换了它，但是这不是我们要找的字符串？继续深入探究之前，我们需要再确认一件事情。我们的脚本`read_write_heap.py`在目标字符串首次出现之后就退出了，如果堆中有多个字符串`Holberton`呢？为了避免遗漏，我们将脚本`read_write_heap.py`执行多次。
 
@@ -672,7 +672,7 @@ b'Holberton'
 
 好了，我们已经找到字符串的准确地址`0x7f04d721b230`。  
 
-![](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/tumblr_nomr17FFSt1tym3lfo1_400.gif?raw=true)
+![](/virtual_memory/tumblr_nomr17FFSt1tym3lfo1_400.gif?raw=true)
 
 
 ## 六、替换Python进程的字符串 ##
@@ -881,7 +881,7 @@ julien@holberton:~/holberton/w/hackthevm1$
 
 很好， 成功把字符串`Holberton`替换成`~ Betty ~`。  
 
-![](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/giphy-3.gif?raw=true)
+![](/virtual_memory/giphy-3.gif?raw=true)
 
 ## 七、下节预告 ##
 本文我们成功修改了正在运行的Python3脚本中的字符串，但是仍有几个问题有待解答：

@@ -36,7 +36,7 @@ void my_buggy_function(const char *user_provided_message)
 GCC栈溢出保护(SSP)是在函数中插入一个额外的变量(stack canary)，该变量位于函数返回地址所在内存的后面，函数进入的时候该变量被赋为特定的值，函数返回前判断该变量的值有没有改变。如果变化了，说明出现了栈溢出，这时候返回地址可能已经被修改了。  
 
 下图结合第一部分的代码片段展示SSP的工作原理：图1是正常的调用不会产生任何异常；图2写入了20个字节，导致Buffer发生缓冲区溢出，并把返回地址覆盖了，这会导致程序产生非预期的行为，但是程序并不知道发生了栈溢出；图3开启了SSP，函数返回的时候发现canary被修改，检测到栈溢出。  
-![栈溢出示意图](https://github.com/sigusr1/blog_assets/blob/master/2019-07-14-gcc_stack_protect_on_rtos/buffer_overflow.JPG?raw=true)
+![栈溢出示意图](/2019-07-14-gcc_stack_protect_on_rtos/buffer_overflow.JPG?raw=true)
 
 当然，SSP并不能检测所有的栈溢出，但有胜于无。不过，SSP会增加运行期消耗，表现为使用的栈内存增加，CPU执行的指令增多。可以考虑在debug版本中开启该功能，release版本中关闭该功能。
 

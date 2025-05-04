@@ -17,7 +17,7 @@ tags: [stdin/stdout, 重定向]
 
 一些嵌入式设备，一般都会留有调试串口，经由RS232/485标准与PC的COM口相连，将打印输出在PC上显示，并可以接收PC端的输入，如下图所示：  
 
-![连接示意图](https://github.com/sigusr1/blog_assets/blob/master/2019-05-26-linux_console_redirect/pc_com_dev.png?raw=true)
+![连接示意图](/2019-05-26-linux_console_redirect/pc_com_dev.png?raw=true)
 
 设备出厂部署后，不方便接调试串口，查看设备输出就变得比较困难，不利于问题定位。  
 如果设备具有联网能力，我们可以通过telnet或者ssh登录到设备上，进行远程调试。  
@@ -35,11 +35,11 @@ tags: [stdin/stdout, 重定向]
 
 下图展示了Linux系统中标准输入/输出（STDIN/STDOUT）与控制终端的关系，其中ttyS0即串口:
 
-![标准输入输出与串口设备的关系](https://github.com/sigusr1/blog_assets/blob/master/2019-05-26-linux_console_redirect/std_with_ttyS.png?raw=true)
+![标准输入输出与串口设备的关系](/2019-05-26-linux_console_redirect/std_with_ttyS.png?raw=true)
 
 用户通过telnet或者ssh登录后，会动态生成一个控制终端(比如/dev/pts/0)，如下图所示：
 
-![未重定向的网络终端](https://github.com/sigusr1/blog_assets/blob/master/2019-05-26-linux_console_redirect/net_console_no_redirect.png?raw=true)
+![未重定向的网络终端](/2019-05-26-linux_console_redirect/net_console_no_redirect.png?raw=true)
 
 我们是否可以把标准输入/输出（STDIN/STDOUT）从ttyS0解绑，重新映射到pts0上呢？答案是肯定的。  
 
@@ -47,7 +47,7 @@ tags: [stdin/stdout, 重定向]
 
 *注：在某个控制终端执行的命令（启动的程序），默认绑定当前终端，所以正常情况下telnet或者ssh到设备后，执行`ls`等命令，输出都是在当前终端。*
 
-![重定向后的网络终端](https://github.com/sigusr1/blog_assets/blob/master/2019-05-26-linux_console_redirect/net_console_redirect.png?raw=true)
+![重定向后的网络终端](/2019-05-26-linux_console_redirect/net_console_redirect.png?raw=true)
 
 ## 三、实现 ##  
 
@@ -55,7 +55,7 @@ tags: [stdin/stdout, 重定向]
 
 如下图所示，应用程序中需要集成一个Server，用来接收Client发送来的重定向指令。
 
-![重定向实现方式](https://github.com/sigusr1/blog_assets/blob/master/2019-05-26-linux_console_redirect/implement.png?raw=true)
+![重定向实现方式](/2019-05-26-linux_console_redirect/implement.png?raw=true)
 
 相关过程说明如下：
 

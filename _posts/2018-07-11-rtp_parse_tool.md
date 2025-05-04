@@ -36,7 +36,7 @@ tags: [RTP]
 
 
 基于以上思路，可以用下面的数据处理流程来实现：
-![数据处理流程图](https://github.com/sigusr1/blog_assets/blob/master/2018-07-11-rtp_parse_tool/work_flow.JPG?raw=true)
+![数据处理流程图](/2018-07-11-rtp_parse_tool/work_flow.JPG?raw=true)
 
 1. libpcap可以对抓包文件进行回放，从抓包文件中逐条提取报文并保留报文的时间戳信息。问题4得以解决。
 2. libpcap的输出直接输入到libnids中，对TCP流进行分析处理，解决问题1、2、3。
@@ -58,7 +58,7 @@ tags: [RTP]
    下图最后一行的Frm_Interval计算过程为：`1514774319.466358s - 1514774318.891198s =  575160us`
 
 
-	![示例文件](https://github.com/sigusr1/blog_assets/blob/master/2018-07-11-rtp_parse_tool/parse_file.JPG?raw=true)
+	![示例文件](/2018-07-11-rtp_parse_tool/parse_file.JPG?raw=true)
 
 5. rtp_parser/bin目录下的analyse.py脚本可以对解析出来的txt文件进行分析  
 
@@ -68,16 +68,16 @@ tags: [RTP]
 
 
    执行 `pyhton analyse.py src[192.168.43.252[554]]--dst[192.168.43.1[39535]].txt`可得到下图所示分析结果。图中横坐标代表帧，纵坐标代表帧间隔，单位是us。如下图所示，有一个帧间隔达到了500多ms，肯定会导致卡顿现象。  
-   ![解析结果](https://github.com/sigusr1/blog_assets/blob/master/2018-07-11-rtp_parse_tool/rtp_parse_result.png?raw=true)
+   ![解析结果](/2018-07-11-rtp_parse_tool/rtp_parse_result.png?raw=true)
 
    同时命令行会有如下输出，提示帧间隔过大。最后一行对应的就是图中的波峰：  
 
-   ![警告](https://github.com/sigusr1/blog_assets/blob/master/2018-07-11-rtp_parse_tool/warnning.JPG?raw=true)
+   ![警告](/2018-07-11-rtp_parse_tool/warnning.JPG?raw=true)
 
    从上面的txt解析文件中可以看出，问题应该出在RTP序号18492 ~ 18500之间。  
    分析抓包文件，可以看到RTP序号18492和18493之间有个500多ms的间隔(*18492和18491在同一个TCP报文中，wireshark并未显示出18492*），而这期间接收端的窗口都是OK的，也就是说发送端导致了这个间隔。排查发送端代码，果然有个分支会sleep 500ms，某些情况会走到该分支。  
 
-   ![抓包截图](https://github.com/sigusr1/blog_assets/blob/master/2018-07-11-rtp_parse_tool/net_delay.JPG?raw=true)
+   ![抓包截图](/2018-07-11-rtp_parse_tool/net_delay.JPG?raw=true)
 
 
 

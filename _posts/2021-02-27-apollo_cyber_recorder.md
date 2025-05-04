@@ -13,7 +13,7 @@ apollo中提供了cyber_recorder工具，可以将报文录制下来，保存为
 
 cyber_recorder录制的文件结构如下图所示，各组成部分由protocolbuffers描述，protocolbuffers文件路径为`cyber/proto/record.proto`。下面介绍几个重要的组成单元：
 
-![逻辑结构](https://github.com/sigusr1/blog_assets/blob/master/2021-02-27-apollo_cyber_recorder/logic_format.png?raw=true)
+![逻辑结构](/2021-02-27-apollo_cyber_recorder/logic_format.png?raw=true)
 
 - Header：文件头部信息，用来描述整个文件的信息。
   - Header位于文件的开始部分

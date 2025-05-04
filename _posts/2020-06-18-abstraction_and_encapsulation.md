@@ -18,7 +18,7 @@ tags: [重构]
 
 业务层(APP层)的录像模块（包括循环录像、事件录像等）从`mp4数据包缓存队列`中读取数据进行存储，实时预览模块从`RTP数据包缓存队列`中读取数据发送给客户端，平台接入模块从`PS数据包缓存队列`中读取数据发送给平台。
 
-![优化前的业务框图](2020-06-18-abstraction_and_encapsulation/old_work_flow.jpg?raw=true)
+![优化前的业务框图](/2020-06-18-abstraction_and_encapsulation/old_work_flow.jpg?raw=true)
 
 我们先停下来想想，这种业务流程存在哪些问题？
 
@@ -46,7 +46,7 @@ tags: [重构]
 2. DSP和APP之间只有一个共享的`H264数据缓存队列`
 3. 抽象出一个`帧读取器对象`，APP层的录像、预览、平台接入等模块不再直接操作缓存队列，而是通过帧读取器获取帧数据。
 
-![优化后的业务框图](2020-06-18-abstraction_and_encapsulation/new_work_flow.jpg?raw=true)
+![优化后的业务框图](/2020-06-18-abstraction_and_encapsulation/new_work_flow.jpg?raw=true)
 
 
 那么，这样做的好处在哪里？

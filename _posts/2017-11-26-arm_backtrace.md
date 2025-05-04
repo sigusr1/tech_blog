@@ -37,7 +37,7 @@ tags: [backtrace]
 ### 1. 栈帧 ###
 函数调用过程是栈伸缩的过程。调用函数的时候入参、寄存器和局部变量入栈，栈空间增长，函数返回的时候栈收缩。每个函数都有自己的栈空间，被称为栈帧，在被调用的时候创建，在返回的时候销毁。函数main调用func1的时候，栈帧如下图所示：
 
-![](https://github.com/sigusr1/blog_assets/blob/master/2017-11-26-arm_backtrace/stack_layout.jpg?raw=true)
+![](/2017-11-26-arm_backtrace/stack_layout.jpg?raw=true)
 
 
 函数调用过程中涉及四个重要的寄存器：PC、LR、SP和FP。**注意，每个栈帧中的PC、LR、SP和FP都是寄存器的历史值，并非当前值。**PC寄存器和LR寄存器均指向代码段， 其中PC代表代码当前执行到哪里了，LR代表当前函数返回后，要回到哪里去继续执行。SP和FP用来维护栈空间，其中SP指向栈顶，FP指向上一个栈帧的栈顶。
@@ -117,12 +117,12 @@ void func1(char *src_str)
 
 程序异常的栈信息如下：
 
-![](https://github.com/sigusr1/blog_assets/blob/master/2017-11-26-arm_backtrace/stack_unwind.JPG?raw=true)
+![](/2017-11-26-arm_backtrace/stack_unwind.JPG?raw=true)
 
 
 可以看到问题出现时的PC寄存器取值为0xa02f8524, SP寄存器的值为0xa84f26d8。通过反汇编代码可以看到，PC指针落在函数func3内部。另外看到func3中入栈了4个寄存器，每个寄存器4个字节，lr的值（也就是栈底）应该位于0xa84f26d8（当前的栈顶）向上偏移12个字节的地方，也就是0xa84f26e4的地方，从栈信息中可以看到这里的数值是0xa02f85d8，指向函数func1。
 
-![](https://github.com/sigusr1/blog_assets/blob/master/2017-11-26-arm_backtrace/stack_func3.jpg?raw=true)
+![](/2017-11-26-arm_backtrace/stack_func3.jpg?raw=true)
 
 
 从下图func1的汇编代码中可以看到，栈增长了16个字节，并且有两个寄存器入栈。本栈帧中lr的位置应该在0xa84f26e4（func3栈帧中lr的位置）的基础上向上偏移24个字节，也就是0xa84f26fc，从栈信息中可以看到这里的数值是0xa02f8a70, 指向函数func2，同样的方法，可以得到再往上一级调用是0xa029d404, 指向func。这样我们就得到了下面的调用链：
@@ -130,7 +130,7 @@ void func1(char *src_str)
 **func –> func2 –> func1 –> func3**
 
 
-![](https://github.com/sigusr1/blog_assets/blob/master/2017-11-26-arm_backtrace/stack_func1.jpg?raw=true)
+![](/2017-11-26-arm_backtrace/stack_func1.jpg?raw=true)
 
 
 ### 4. 程序实现 ###

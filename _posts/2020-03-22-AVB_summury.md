@@ -90,7 +90,7 @@ AVB协议栈如下图所示：
 
 
 
-![avb_stack](https://github.com/sigusr1/blog_assets/blob/master/2020-03-22-AVB_summury/avb_stack.png?raw=true)
+![avb_stack](/2020-03-22-AVB_summury/avb_stack.png?raw=true)
 
 
 
@@ -112,7 +112,7 @@ AVB的网络拓扑如下所示：
 
 
 
-![avb_topology](https://github.com/sigusr1/blog_assets/blob/master/2020-03-22-AVB_summury/avb_topology.jpg?raw=true)
+![avb_topology](/2020-03-22-AVB_summury/avb_topology.jpg?raw=true)
 
 
 
@@ -137,7 +137,7 @@ AVB的网络拓扑如下所示：
 #### **a. 车载娱乐系统** ####
 
 
-![avb_in_vehicle](https://github.com/sigusr1/blog_assets/blob/master/2020-03-22-AVB_summury/avb_in_vehicle.png?raw=true)  
+![avb_in_vehicle](/2020-03-22-AVB_summury/avb_in_vehicle.png?raw=true)  
 
 如上图所示，车内的DVD Player播放音视频文件，音频传输到扬声器，视频分别传输到后排座椅的两个显示器上。如何保证扬声器和两个显示器的同步，实现音视频同步？
 
@@ -158,7 +158,7 @@ AVB的网络拓扑如下所示：
 
 
 
-![avb_in_house](https://github.com/sigusr1/blog_assets/blob/master/2020-03-22-AVB_summury/avb_in_house.png?raw=true)
+![avb_in_house](/2020-03-22-AVB_summury/avb_in_house.png?raw=true)
 
 
 

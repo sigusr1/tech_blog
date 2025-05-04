@@ -37,7 +37,7 @@ tags: [软件工程]
 5. 工作在第一线的程序员与程序经理应该意识到：好兵好将都不是天生的，是后天练出来的；既要学会冷静地分析问题，又要充满激情地去工作。  
 
 6. 技术级别与管理级别的映射：  
-![技术级别与管理级别的映射](https://github.com/sigusr1/blog_assets/blob/master/2020-05-10-software_project/tech_manager_level_map.png?raw=true)
+![技术级别与管理级别的映射](/2020-05-10-software_project/tech_manager_level_map.png?raw=true)
 
 7. “迷信”是傻子碰到骗子的结果。傻是内因，被骗是外因。傻子碰到好人未必能做出好事，傻子碰到另一个骗子就会做出另一件傻事。
 
@@ -54,7 +54,7 @@ tags: [软件工程]
 
 
 5. “运行正确”的程序不见得就是高质量的程序。这个程序也许运行速度很低并且浪费内存；也许代码写得一塌糊涂，除了开发者本人谁也看不懂也不会使用。正确性只是反映软件质量的一个因素而已。  
-![程序的属性](https://github.com/sigusr1/blog_assets/blob/master/2020-05-10-software_project/software_property.png?raw=true)
+![程序的属性](/2020-05-10-software_project/software_property.png?raw=true)
 
 6. 优化的关键工作是找出限制性能与效率的“瓶颈”，不要在无关痛痒的地方瞎忙乎。  
 

@@ -50,7 +50,7 @@ tags: [虚拟内存, 翻译]
 - 虚拟内存大小依赖于计算机系统架构
 - 不同的操作系统对虚拟内存的处理会有所不同, 对于现代的大多数操作系统来说, 虚拟内存如下所示:
 
-![虚拟内存示意图](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory.jpg?raw=true)
+![虚拟内存示意图](/virtual_memory/virtual_memory.jpg?raw=true)
 
 在虚拟内存的高地址空间，我们可以看到(下面仅列出了部分内容，并非全部)：
 
@@ -623,7 +623,7 @@ julien@holberton:~/holberton/w/hackthevm0$
 
 
 
-![太不可思议了!](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/blown-mind-explosion-gif.gif?raw=true)
+![太不可思议了!](/virtual_memory/blown-mind-explosion-gif.gif?raw=true)
 
 
 

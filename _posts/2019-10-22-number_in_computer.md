@@ -155,7 +155,7 @@ arm-linux-gnueabihf-objdump -d a.out > a.txt
 - 指令`movt`将16bit的立即数搬移到寄存器的高16位
 
 
-![main函数的汇编代码](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/int_and_unsigned_convert.png?raw=true)
+![main函数的汇编代码](/2019-10-22-number_in_computer/int_and_unsigned_convert.png?raw=true)
 
 
 
@@ -164,7 +164,7 @@ arm-linux-gnueabihf-objdump -d a.out > a.txt
 - 汇编代码中，已经把立即数`-12345`和`12345`翻译成了补码，分别为`0x‭ffffcfc7‬`、`0x‭3039`，均占用4个字节。
 - 汇编代码中不会保存变量名称，仅仅把相关变量放到对应的内存地址。上图142行和144行分别将立即数-12345和12345放到各自的内存区域。
 - `-12345`在内存的低地址，`12345`在内存的高地址，示意图如下（局部变量入栈顺序受优化等级、栈保护等因素影响，不应对入栈顺序做任何假设）：  
-	![栈状态](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/int_in_stack.jpg?raw=true)  
+	![栈状态](/2019-10-22-number_in_computer/int_in_stack.jpg?raw=true)  
 
 
 
@@ -173,7 +173,7 @@ arm-linux-gnueabihf-objdump -d a.out > a.txt
 
 通过gdb可以看到变量signed_int和unsigned_int在内存中的信息如下所示：  
 
-![整数在内存中的表示](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/int_in_mem.png?raw=true) 
+![整数在内存中的表示](/2019-10-22-number_in_computer/int_in_mem.png?raw=true) 
 
 - signed_int和unsigned_int位于连续的8字节内存区域中，其中signed_int在低地址处（当前栈帧的栈顶），和上面的栈示意图一致
 - 内存中存储的就是对应数字的补码（小端序存储）
@@ -199,7 +199,7 @@ int main()
 
 从下图可以看到，变量signed_int和unsigned_int在内存中完全一样。输出结果不同，是由于printf根据格式化字符串(如%u、%d等）对内存中的数据进行解析，并将解析结果输出。也就是说，内存中同样的内容，按照不同的规则解读（格式化字符串不同)，会输出不同的内容。  
 
-![类型转换内存图](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/printf_unint.png?raw=true) 
+![类型转换内存图](/2019-10-22-number_in_computer/printf_unint.png?raw=true) 
 
 
 ### 2. 整数比较大小 ###
@@ -207,12 +207,12 @@ int main()
 下面的代码，大家都知道为啥输出结果不一样，因为右边的`int`被提升为`unsigned int`，`-12345`被解析成了`4294954951`，所以大于1。  
 但类型转换是如何做到的呢？从gdb信息可以看到，两份代码中变量a、b在内存中是一样的。
 
-![整数比较大小的代码和内存图](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/compare.png?raw=true) 
+![整数比较大小的代码和内存图](/2019-10-22-number_in_computer/compare.png?raw=true) 
 
 
 我们再对比下二者的汇编代码：
 
-![整数比较大小的汇编代码](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/compare_assembly.png?raw=true) 
+![整数比较大小的汇编代码](/2019-10-22-number_in_computer/compare_assembly.png?raw=true) 
 
 
 可以看到以下信息:  
@@ -273,21 +273,21 @@ int main()
 - 另外，从142行可以看到，栈空间分配了8个字节。`signed char`实际上也占用了4个字节，这就是**按字长对齐**（32位系统字长为4字节，64位为8字节）。
 
 
-![符号位扩展汇编代码](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/flag_expand_assembly.png?raw=true) 
+![符号位扩展汇编代码](/2019-10-22-number_in_computer/flag_expand_assembly.png?raw=true) 
 
 
 
 接下来我们看看运行时的调试信息：
 
 
-![符号位扩展gdb信息](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/flag_expand_runtime.png?raw=true) 
+![符号位扩展gdb信息](/2019-10-22-number_in_computer/flag_expand_runtime.png?raw=true) 
 
 从上面我们可以看到，a和b在内存中的关系如下图所示，注意两点：  
 
 - 为了内存对齐而填充的3个字节是随机值，如果不小心用到会出莫名其妙的问题。这也是为什么要求变量必须初始化的原因。
 - 变量a被放在了4字节的高字节处，这是小端机的做法，大端机会放在低字节处。（结合前面的整数解读部分，运行期判断大小端的原理是不是就一目了然了）
 
-![符号位扩展栈状态](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/flag_expand_stack.png?raw=true) 
+![符号位扩展栈状态](/2019-10-22-number_in_computer/flag_expand_stack.png?raw=true) 
 
 
 ### 4. 数据截断 ###
@@ -319,7 +319,7 @@ b=-17=0xef, c=-12817=0xcdef
 
 也就是说，数据截断，是把原数据的补码根据目的类型的长度截断，丢弃高位数据，保留低位数据，期间不进行任何语义解析。
 
-![数据截断汇编代码](https://github.com/sigusr1/blog_assets/blob/master/2019-10-22-number_in_computer/int_cut.png?raw=true) 
+![数据截断汇编代码](/2019-10-22-number_in_computer/int_cut.png?raw=true) 
 
 
 好了，本文到此结束。回过头来看看文章开头的结论，理解的是否深刻点了？

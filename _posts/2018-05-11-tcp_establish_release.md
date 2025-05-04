@@ -17,7 +17,7 @@ TCP连接建立过程需要经过三次握，断开过程需要经过四次挥�
 ### 1. 三次握手 ###
 TCP正常的建立连接过程如下图所示：
 
-![](https://github.com/sigusr1/blog_assets/blob/master/2018-05-11-tcp_establish_release/three_handshake.png?raw=true)
+![](/2018-05-11-tcp_establish_release/three_handshake.png?raw=true)
 
 1. 客户端发送的TCP报文中标志位SYN置1，初始序号seq=x（随机选择）。Client进入SYN_SENT状态，等待Server确认。
 2. 服务器收到数据包后，根据标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=x+1，随机产生一个初始序号seq=y，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。 
@@ -25,7 +25,7 @@ TCP正常的建立连接过程如下图所示：
 
 ### 2. 同时打开 ###
 同时打开连接是指通信的双方在接收到对方的SYN包之前，都进行了主动打开的操作并发出了自己的SYN包。由于一个四元组（源IP、源端口、目的IP、目的端口）标识一个TCP连接，一个TCP连接要同时打开需要通信的双方知晓对方的IP和端口信息才行，这种场景在实际情况中很少发生。同时打开的流程如下图：
-![](https://github.com/sigusr1/blog_assets/blob/master/2018-05-11-tcp_establish_release/open_same_time.png?raw=true)
+![](/2018-05-11-tcp_establish_release/open_same_time.png?raw=true)
 
 
 1. A的应用程序使用端口7777向B的端口8888发送TCP连接请求
@@ -72,7 +72,7 @@ tcp        0      0 127.0.0.1:50000         127.0.0.1:50000         ESTABLISHED
 ###  1. 四次挥手  ###
 
 TCP连接断开过程如下图所示：
-![](https://github.com/sigusr1/blog_assets/blob/master/2018-05-11-tcp_establish_release/four_handshake.png?raw=true)
+![](/2018-05-11-tcp_establish_release/four_handshake.png?raw=true)
 
 
 1. Client发送一个FIN，用来关闭Client到Server的数据传送，Client进入FIN_WAIT_1状态。
@@ -85,7 +85,7 @@ TCP连接断开过程如下图所示：
 
 同时关闭和前面**同时打开**的四次握手过程基本类似，流程如下：  
 
-![](https://github.com/sigusr1/blog_assets/blob/master/2018-05-11-tcp_establish_release/close_same_time.png?raw=true)
+![](/2018-05-11-tcp_establish_release/close_same_time.png?raw=true)
 
 注意：
 1. 两端的状态变化都是由ESTABLISHED->FIN_WAIT_1->CLOSING->TIME_WAIT->CLOSED

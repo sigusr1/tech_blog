@@ -12,7 +12,7 @@ tags: [虚拟内存, 翻译]
 前面我们提到在进程的虚拟内存中可以找到哪些东西，以及在哪里去找。  
 本文我们将通过打印程序中不同元素内存地址的方式，一步一步细化下面的虚拟内存图：
 
-![虚拟内存示意图](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory.jpg?raw=true)
+![虚拟内存示意图](/virtual_memory/virtual_memory.jpg?raw=true)
 
 
 
@@ -117,7 +117,7 @@ julien@holberton:~/holberton/w/hackthevm2$
 
 至此可以确定堆(`0x901010`)在栈(`0x7ffd4204c554`)的下面。据此可以画出如下的内存图:
 
-![内存布局示意图](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory_stack_heap.png?raw=true)
+![内存布局示意图](/virtual_memory/virtual_memory_stack_heap.png?raw=true)
 
 ## 五、可执行程序的位置 ##
 可执行程序也会被加载到虚拟内存中。如果我们打印`main`函数的地址，就可以知道可执行程序在虚拟内存中相对于堆栈的位置。  
@@ -238,7 +238,7 @@ julien@holberton:~/holberton/w/hackthevm2$
 由此可见，我们打印出来的地址和内容都是一致的。因此可以确认这个地址就是我们的`main`函数。
 
 更新后内存布局示意图如下:  
-![](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory_stack_heap_executable.png?raw=true)
+![](/virtual_memory/virtual_memory_stack_heap_executable.png?raw=true)
 
 
 
@@ -431,7 +431,7 @@ julien@holberton:~/holberton/w/hackthevm2$
 
 *译者注：下图中的`argv array`指的是变量`argv`的地址，'env array'指的是变量`env`的地址。*
 
-![](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory_args_env.png?raw=true)
+![](/virtual_memory/virtual_memory_args_env.png?raw=true)
 
 
 
@@ -542,7 +542,7 @@ julien@holberton:~/holberton/w/hackthevm2$
 
 至此，我们可以画出如下所示的内存布局图(注意栈的生长方向)：
 
-![](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory_stack.png?raw=true)
+![](/virtual_memory/virtual_memory_stack.png?raw=true)
 
 ## 八、/proc ##
 
@@ -700,7 +700,7 @@ julien@holberton:~$
   
 我们将在下一篇文章中解答这些问题。在结束本章前，让我们看下目前得到的虚拟内存示意图：
 
-![](https://github.com/sigusr1/blog_assets/blob/master/virtual_memory/virtual_memory_args_stack.png?raw=true)
+![](/virtual_memory/virtual_memory_args_stack.png?raw=true)
 
 
 ## 九、下节预告 ##
