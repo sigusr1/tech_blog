@@ -35,4 +35,9 @@ div[class^=language-console] .code-header::before
   box-shadow: 1.25rem 0 0 #aded0c, 2.5rem 0 0 #aded0c
 }
 
+.highlight .err {
+  background: none !important;
+  color: inherit !important;
+}
+
 // End custom language-console block style
