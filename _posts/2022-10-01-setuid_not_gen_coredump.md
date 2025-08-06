@@ -11,16 +11,16 @@ tags:  [capability, 安全]
 下面用一个简化后的例子说明这个问题：
 
 1. 在系统中创建一个新用户`test`:
-  ```
-  sudo adduser test
-  ```
+    ```
+    sudo adduser test
+    ```
 2. 执行命令 `cat /etc/passwd` 查看用户`test`的`uid`, 我的是1002
-  ```
-  test:x:1002:1002:,,,:/home/test:/bin/bash
-  ```
+    ```
+    test:x:1002:1002:,,,:/home/test:/bin/bash
+    ```
 3. 简化后的示例程序如下，注意用实际的`uid`替换宏TEST_UID的值:
 
-    ```c
+    ```c++
     #include <stdio.h>
     #include <sys/prctl.h>
     #include <unistd.h>
@@ -54,10 +54,10 @@ tags:  [capability, 安全]
     ```
 
 4. 编译运行，注意用root权限执行，因为上面代码中调用了`setuid`，普通用户是没这个权限的：
-  ```
-  gcc gen_coredump.c
-  sudo ./a.out
-  ```
+    ```
+    gcc gen_coredump.c
+    sudo ./a.out
+    ```
 
 5. 输出如下，可以看到dumpable的值在setuid后确实变了：
 
@@ -72,10 +72,10 @@ tags:  [capability, 安全]
 7. 这是因为setuid后，`dumpable`被设置成新用户`test`中`/proc/sys/fs/suid_dumpable`的值，参考[ptrace(2)](http://man.he.net/man2/prctl):  
 ![dumpable flag受用户变更影响](http://data.coderhuo.tech/2022-10-01-setuid_not_gen_coredump/dumpable_change_small.jpg)
 8. 通过下面的命令可以查看用户`test`中`/proc/sys/fs/suid_dumpable`的值，我的设备上确实是0（不同系统可能有差异）
-  ```
-  su test
-  cat /proc/sys/fs/suid_dumpable
-  ```
+    ```
+    su test
+    cat /proc/sys/fs/suid_dumpable
+    ```
 9. 系统的这种行为，主要是出于安全考虑：
   - 一般执行setuid/setgid的程序，都是先运行在特权模式（比如以root运行），执行一些只有特权用户才能执行的任务，然后修改uid/gid降权，运行在普通模式。
   - 特权模式下执行的代码，可能在内存中留下了痕迹（比如将密码读取到了内存），如果生成了coredump，或者允许gdb attach上去，可能会造成信息泄露。
