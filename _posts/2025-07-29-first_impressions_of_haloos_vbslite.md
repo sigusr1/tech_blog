@@ -196,7 +196,7 @@ static struct mem_region mvbs_heap_region[] = {
 - 避免了调用系统内存管理函数导致的**时延不确定性**，这点对于实时操作系统很重要
 - **踩内存检测机制**：
     - 为每块内存打了标记，free的时候检测被释放内存块是否被踩
-    - 提供了`mvbs_mm_check_guard`函数，可以遍历整个预分配内存区，检测是否有内存块被踩。这种机制对开发同学定位问题很有用，之前我在定位一个踩内存问题时也用过[类似方式](http://30.203.142.116:4000/posts/DMA_mem_crash/#51-hook-threadx%E8%87%AA%E5%B8%A6%E7%9A%84%E5%86%85%E5%AD%98%E6%8E%A5%E5%8F%A3)
+    - 提供了`mvbs_mm_check_guard`函数，可以遍历整个预分配内存区，检测是否有内存块被踩。这种机制对开发同学定位问题很有用，之前我在定位一个踩内存问题时也用过[类似方式](http://tech.coderhuo.tech/posts/DMA_mem_crash/#51-hook-threadx%E8%87%AA%E5%B8%A6%E7%9A%84%E5%86%85%E5%AD%98%E6%8E%A5%E5%8F%A3)
 - 便于统计内存使用情况
 
  > mvbs_malloc、mvbs_free并不是线程安全的，需避免多线程并发使用。
