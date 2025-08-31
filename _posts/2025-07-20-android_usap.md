@@ -1,8 +1,8 @@
 ---
 title: "Android USAP简介"
 date: 2025-07-20
-categories: [操作系统]
-tags:  [Andoiroid, USAP]
+categories: [Android]
+tags:  [USAP]
 ---
 
 * content

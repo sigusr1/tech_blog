@@ -1,7 +1,7 @@
 ---
 title: "Android AOSP 代码中也有这种低级错误"
 date: 2025-07-19  
-categories: [杂谈]
+categories: [Android]
 tags: [Android, aosp]
 ---
 
