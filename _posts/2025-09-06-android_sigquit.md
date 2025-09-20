@@ -16,7 +16,7 @@ tags:  [SIGQUIT]
 近期发现一个问题，执行`bugreportz`收集信息的时候，系统中有几个应用会退出，退出原因是收到了`SIGQUIT`信号。
 
 查看Android源码发现，`bugreportz`会调用`dumpstate`收集系统中各进程的调用栈等信息，`dumpstate`是通过向目标进程发送`SIGQUIT`信号触发信息收集流程的：
-![bugreportz工作流程](http://data.coderhuo.tech/2025-09-06-android_sigquit/bugreport_workflow.png)
+![bugreportz工作流程](http://data.coderhuo.tech/2025-09-06-android_sigquit/bugreport_workflow.jpg)
 
 
 默认情况下，进程收到信号`QIGQUIT`后的预期行为是生成coredump并退出。那些不退出的进程，一定是做了特殊处理，比如：
@@ -33,7 +33,7 @@ Android中`SIGQUIT`相关处理流程如下图所示：
 - 由于创建新线程的时候会继承当前线程的`sigmask`，所以app进程后续创建的线程也都自动屏蔽该信号
 - app进程在执行用户代码前，创建了专门的信号处理线程`Signal Catcher`，用于处理`SIGQUIT`等信号
 
-![SIGQUIT处理流程简图](http://data.coderhuo.tech/2025-09-06-android_sigquit/sigquit_simple_block_workflow.png)
+![SIGQUIT处理流程简图](http://data.coderhuo.tech/2025-09-06-android_sigquit/sigquit_simple_block_workflow.jpg)
 
 如果你只关心基本原理，本文读到这里就可以了。  
 如果你想看下Android是怎么实现的（最好是参照源码阅读），请继续。
@@ -50,7 +50,7 @@ Android中`SIGQUIT`相关处理流程如下图所示：
 
 具体调用链图中标注的比较清晰，这里就不再赘述了。[点击查看高清大图](http://data.coderhuo.tech/2025-09-06-android_sigquit/zygote_block_sigquit.drawio.svg)。
 
-![SIGQUIT屏蔽流程图](http://data.coderhuo.tech/2025-09-06-android_sigquit/zygote_block_sigquit.png)
+![SIGQUIT屏蔽流程图](http://data.coderhuo.tech/2025-09-06-android_sigquit/zygote_block_sigquit.jpg)
 
 上图最后一步`Runtime::BlockSignals`的实现如下(看到`SIGQUIT`了吧)：
 ```c++
@@ -80,11 +80,11 @@ void Block() {
 
 `SIGQUIT`的捕获流程如下图所示：
 - `zygote`在第3步fork出应用进程后，应用进程也是屏蔽了信号`SIGQUIT`的
-- 在执行用户代码前，框架层进过一番调用，最终在第10步创建了`Signal Catcher`线程，专门用来处理`SIGQUIT`等信号
+- 在执行用户代码前，框架层经过一番调用，最终在第10步创建了`Signal Catcher`线程，专门用来处理`SIGQUIT`等信号
 
 具体调用链图中标注的比较清晰，这里就不再赘述了。[点击查看高清大图](http://data.coderhuo.tech/2025-09-06-android_sigquit/app_wait_sigquit.drawio.svg)。
 
-![SIGQUIT捕获流程](http://data.coderhuo.tech/2025-09-06-android_sigquit/app_wait_sigquit.png)
+![SIGQUIT捕获流程](http://data.coderhuo.tech/2025-09-06-android_sigquit/app_wait_sigquit.jpg)
 
 `Signal Catcher`线程主函数如下：
 
