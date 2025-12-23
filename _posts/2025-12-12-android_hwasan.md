@@ -51,7 +51,7 @@ HWASan和传统ASan一样，都能检测下面的内存错误：
 - 内存重复释放/野指针(Double free/wild free)
 
 相比于传统ASan，HWASan的性能开销有所改善：
-- CPU消耗类似(大约是关闭状态的2倍)
+- CPU消耗类似(大约是正常程序的2倍)
 - 可执行程序大小类似 (比正常程序增加40 – 50%)
 - **相比传统ASan，内存消耗降低10% – 35%**
 
@@ -92,7 +92,7 @@ HWASan还可以监测栈上的非法内存使用，比如栈溢出、使用已�
 ### 2.3 局限性
 
 前面提到TAG大小是1字节，能表示的范围是[0, 255]，也就是说总共有256个不同的TAG。  
-如果当前进程申请未释放的内存块多于255，必然会出现不同内存块TAG相同的情况。  
+如果当前进程申请未释放的内存块多于256，必然会出现不同内存块TAG相同的情况。  
 如果恰好非法访问了TAG相同的内存块，HWASan是检测不出来的。  
 这种漏检的概率是大约是0.4%，即1/256。
 
@@ -101,7 +101,7 @@ HWASan还可以监测栈上的非法内存使用，比如栈溢出、使用已�
 #include <stdio.h>
 
 #define TAG_MASK ((long)0xff << 56)
-#define GET_TAG(pointer) ((long)pointer & TAG_MASK) >> 56
+#define GET_TAG(pointer) (((long)pointer & TAG_MASK) >> 56)
 #define CLEAR_TAG(pointer) ((long)pointer & ~TAG_MASK)
 
 #define MALLOC_SIZE (32)
@@ -178,7 +178,7 @@ Linux下gdb运行，crash在`delete[] p`这一行，实际上`*(p - 512 + i) = 0
 [Arm MTE](https://developer.android.com/ndk/guides/arm-mte)的功能、原理和HWASan基本一样，相当于把HWASan的部分实现硬件化了，所以性能更好，[有资料](https://www.usenix.org/system/files/login/articles/login_summer19_03_serebryany.pdf)提到CPU overhead大概只有百分之几，内存overhead 3~5%，完全可以在生产环境开启。
 Android 13开始支持该功能，不过好像现在支持的硬件还不多。
 
-## 3. 参考资料
+## 4. 参考资料
 - https://source.android.com/docs/security/test/hwasan
 - https://arxiv.org/pdf/1802.09517
 - https://newsroom.arm.com/blog/memory-safety-arm-memory-tagging-extension
