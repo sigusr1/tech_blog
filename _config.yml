@@ -96,10 +96,10 @@ theme_mode: # [light | dark]
 #
 # e.g. 'https://cdn.com'
 # cdn: https://github.com/sigusr1/blog_assets/blob/master/
-cdn: http://data.coderhuo.tech
+# cdn: http://data.coderhuo.tech
 
 # the avatar on sidebar, support local or CORS resources
-avatar: http://data.coderhuo.tech/favicon/coderhuo-512x512.png
+avatar: /assets/images/favicon/coderhuo-512x512.png
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
