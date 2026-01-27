@@ -84,10 +84,10 @@ sudo /usr/local/nginx/sbin/nginx
 在服务端和客户端抓包可以看到，被和谐了，有个“中间人”同时对Server和Client都发送了RST报文。
 
 网络拓扑如下：
-![nginx代理网络拓扑图](/2017-04-06-nginx_google_proxy/nginx_topology.jpg?raw=true)
+![nginx代理网络拓扑图](/assets/images/2017-04-06-nginx_google_proxy/nginx_topology.jpg)
 
 报文如下：
-![nginx代理中间人断开连接.jpg](/2017-04-06-nginx_google_proxy/nginx_proxy.jpg?raw=true)
+![nginx代理中间人断开连接.jpg](/assets/images/2017-04-06-nginx_google_proxy/nginx_proxy.jpg)
 
 
 
