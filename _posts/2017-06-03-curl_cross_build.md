@@ -14,7 +14,7 @@ tags: [curl]
 - curl-7.29.0、openssl-OpenSSL\_1\_0\_2g和zlib-1.2.8是待编译的源码
 - libs用来存放编译出来的库以及头文件
 
-![目录结构图](/2017-06-03-curl_cross_build/curl_dir_tree.jpg?raw=true)
+![目录结构图](/assets/images/2017-06-03-curl_cross_build/curl_dir_tree.jpg?raw=true)
 
 编译所需源码请从官网下载。
 
