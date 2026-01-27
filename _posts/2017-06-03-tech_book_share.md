@@ -34,10 +34,10 @@ tags: [书籍分享]
 ## 4. [《编写可读代码的艺术》](/assets/images/books/tech/%E7%BC%96%E5%86%99%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E8%89%BA%E6%9C%AF.pdf) ##
 《The Art of Readable Code》，书如其名，结合实际例子来讲如何提高代码的可读性。
 
-## 5. [《软件工程思想》](/assets/images/books/tech/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%9D%E6%83%B3) ##
+## 5. [《软件工程思想》](https://github.com/sigusr1/tech_blog/tree/main/assets/images/books/tech/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%9D%E6%83%B3) ##
 畅销书《高质量C++/C编程指南》作者林锐出品，这里有篇博客摘录了其中的精华片段，可供参考:[《软件工程思想》--赏析](https://tech.coderhuo.tech/posts/software_project/)。
 
-## 6. [《深入理解计算机系统》](/assets/images/books/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F) ##
+## 6. [《深入理解计算机系统》](https://github.com/sigusr1/tech_blog/tree/main/assets/images/books/tech/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F) ##
 
 建议阅读，如果能在大学阶段精度最好。  
 有了一定的经验后回过头来再读这本书，也可以借机系统性梳理下相关知识。
