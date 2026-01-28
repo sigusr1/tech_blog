@@ -19,7 +19,7 @@ tags: [跨平台]
 
 系统层次结构如下所示：
 
-![](/2018-05-26-wrap_printf_over_platform/system_layer.JPG?raw=true)
+![](/assets/images/2018-05-26-wrap_printf_over_platform/system_layer.JPG)
 
 1. 平台适配层用来屏蔽各系统差异，自身编译成静态库，并对业务层提供统一的头文件。
 2. 业务层直接调用平台适配层封装好的接口，不关心底层实现。
@@ -210,11 +210,11 @@ int main()
 ```
 armv7-a架构下的反汇编如下图所示，可以看到，间接调用比直接调用多了3条指令。  
 间接调用的时候首先把符号common_printf的地址0x1f64c加载到r3寄存器（右侧第4行和第5行），然后访问该地址的内容（右侧第6行），最后调用common_printf（右侧第9行）。
-![](/2018-05-26-wrap_printf_over_platform/armv7-a.JPG?raw=true)
+![](/assets/images/2018-05-26-wrap_printf_over_platform/armv7-a.JPG)
 
 
 x86-64架构下的反汇编如下图所示，可以看到，间接调用比直接调用多了1条指令。
-![](/2018-05-26-wrap_printf_over_platform/x86-64.JPG?raw=true)
+![](/assets/images/2018-05-26-wrap_printf_over_platform/x86-64.JPG)
 
 ## 其他 ##
 
