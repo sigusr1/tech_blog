@@ -24,7 +24,7 @@ tags: [空口抓包]
 以下图为例，IPAD如果和最左侧的台式机通信，MacBook完全有能力监听他们的通信。
 
 
-![无线网络拓扑](/2018-11-29-wifi_package_capture/network_topology.png?raw=true)
+![无线网络拓扑](/assets/images/2018-11-29-wifi_package_capture/network_topology.png)
 
 空口抓包就是基于这个原理工作的。如果我们想要抓某个嵌入式设备的无线报文，只需在它附近运行一个具有监听功能的PC。
 
@@ -84,11 +84,11 @@ tags: [空口抓包]
 比如：OPPO R11的iperf吞吐量在13Mbps左右，而Xiaomi 5X的吞吐量在25Mbps左右。
 
 如下图所示，设备和Xiaomi 5X交互时，TCP数据包载荷都是1460字节：
-![小米5x抓包](/2018-11-29-wifi_package_capture/xiaomi_5x_1420.png?raw=true)
+![小米5x抓包](/assets/images/2018-11-29-wifi_package_capture/xiaomi_5x_1420.png)
 
 而设备和OPPO R11交互时，则是一个1420字节的大包和一个40字节的小包交替出现。
 
-![OPPO R11抓包](/2018-11-29-wifi_package_capture/oppo_r11_1460.png?raw=true)
+![OPPO R11抓包](/assets/images/2018-11-29-wifi_package_capture/oppo_r11_1460.png)
 
 
 从上面报文中的TCP握手阶段可以看出，**OPPO R11（192.168.42.2）的MSS是1420**。这个字段是最大报文段的意思，如果数据长度超过该字段，需要拆包发送。    
@@ -106,12 +106,12 @@ tags: [空口抓包]
 在Wi-Fi稳定性测试过程中，发现速率每过十分钟左右就会下降到5Mbps左右，3s左右才能恢复。    
 用Omnipeek打开抓包文件，在流量图中找到一个速率下降的区间：    
 
-![省电模式抓包](/2018-11-29-wifi_package_capture/power_save_flow.png?raw=true)
+![省电模式抓包](/assets/images/2018-11-29-wifi_package_capture/power_save_flow.png)
 
 分析波谷附近报文，发现PC的网卡进入了省电模式。    
 禁用PC网卡省电模式后再测试，Wi-Fi速率一直比较平稳。    
 
-![省电模式标志](/2018-11-29-wifi_package_capture/power_save_flag.png?raw=true)
+![省电模式标志](/assets/images/2018-11-29-wifi_package_capture/power_save_flag.png)
 
 ### 3. 其他适用场景 ###
 
