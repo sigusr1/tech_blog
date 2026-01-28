@@ -64,12 +64,12 @@ tags: [arm, 踩内存, DMA, Cache一致性]
 
 PC指针`0xa000a8ac`对应的反汇编代码如下，可以看出，是死在了`_txe_semaphore_create`函数中（从上面的打印信息可以看出`r5`寄存器的值是`0x00000000`, 从下面的反汇编代码可以看出死机时在尝试访问该值偏移20字节的内存地址）。通过上面的各级PC指针进行回溯，发现回溯出来的函数都是有效的（栈被破坏的情况下，回溯出来的调用栈可能是无效的，后面会提到）。
 
-![_txe_semaphore_create函数反汇编代码](/assets/images/2019-07-28-DMA_mem_crash/txe_semaphore_create_asm.PNG)
+![txe_semaphore_create函数反汇编代码](/assets/images/2019-07-28-DMA_mem_crash/txe_semaphore_create_asm.PNG)
 
 
 虽然ThreadX不是开源的，但我们有幸在github上找到了一份开源代码，而且这份代码和我们的反汇编基本上能对应起来。_txe_semaphore_create的源码（经过裁剪，仅为示例，实际代码以参考文档1为准）如下：  
  
-![_txe_semaphore_create函数源码](/assets/images/2019-07-28-DMA_mem_crash/txe_semaphore_create_code.PNG)
+![txe_semaphore_create函数源码](/assets/images/2019-07-28-DMA_mem_crash/txe_semaphore_create_code.PNG)
  
 
 
