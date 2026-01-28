@@ -64,18 +64,18 @@ tags: [arm, 踩内存, DMA, Cache一致性]
 
 PC指针`0xa000a8ac`对应的反汇编代码如下，可以看出，是死在了`_txe_semaphore_create`函数中（从上面的打印信息可以看出`r5`寄存器的值是`0x00000000`, 从下面的反汇编代码可以看出死机时在尝试访问该值偏移20字节的内存地址）。通过上面的各级PC指针进行回溯，发现回溯出来的函数都是有效的（栈被破坏的情况下，回溯出来的调用栈可能是无效的，后面会提到）。
 
-![_txe_semaphore_create函数反汇编代码](/2019-07-28-DMA_mem_crash/_txe_semaphore_create_asm.PNG?raw=true)
+![_txe_semaphore_create函数反汇编代码](/assets/images/2019-07-28-DMA_mem_crash/_txe_semaphore_create_asm.PNG)
 
 
 虽然ThreadX不是开源的，但我们有幸在github上找到了一份开源代码，而且这份代码和我们的反汇编基本上能对应起来。_txe_semaphore_create的源码（经过裁剪，仅为示例，实际代码以参考文档1为准）如下：  
  
-![_txe_semaphore_create函数源码](/2019-07-28-DMA_mem_crash/_txe_semaphore_create_code.PNG?raw=true)
+![_txe_semaphore_create函数源码](/assets/images/2019-07-28-DMA_mem_crash/_txe_semaphore_create_code.PNG)
  
 
 
 而结构体TX_SEMAPHORE定义如下：  
 
-![TX_SEMAPHORE定义](/2019-07-28-DMA_mem_crash/TX_SEMAPHORE_STRUCT.PNG?raw=true)  
+![TX_SEMAPHORE定义](/assets/images/2019-07-28-DMA_mem_crash/TX_SEMAPHORE_STRUCT.PNG)  
 
 
 
@@ -97,11 +97,11 @@ PC指针`0xa000a8ac`对应的反汇编代码如下，可以看出，是死在了
 从源码可以看出，ThreadX的信号量是以双向链表的形式维护的，如下图所示（SCB是Semaphore Control Block的简称，其实就是上面的结构体`TX_SEMAPHORE`）。`_tx_semaphore_created_ptr`指向表头，另外有个全局变量`_tx_semaphore_created_count`说明当前总共有多少个信号量。  
 
 
-![信号量链表](/2019-07-28-DMA_mem_crash/semaphore_list.PNG?raw=true)  
+![信号量链表](/assets/images/2019-07-28-DMA_mem_crash/semaphore_list.PNG)  
 
 正常的信号量在内存中如下图所示，红框中为一个完整的信号量。信号量结构体中第二个字段是信号量名称，可惜我们使用的接口是被二次封装过的，无法设置信号量的名字，否则可以根据名字知道哪个信号量出问题了。
 
-![正常信号量内存示意图](/2019-07-28-DMA_mem_crash/normal_sem_mem.png?raw=true)
+![正常信号量内存示意图](/assets/images/2019-07-28-DMA_mem_crash/normal_sem_mem.png)
 
 ###  3.2 分析  ###
 
@@ -109,7 +109,7 @@ PC指针`0xa000a8ac`对应的反汇编代码如下，可以看出，是死在了
 
 根据上面的思路复现后，发现某个信号量（红框内，首地址位于内存地址0xa394554c）变成了下面这个样子，面目全非了，最前面的magic等都被破坏了。从这里识别不出来这个信号量是哪里创建的。
 
-![异常信号量内存示意图](/2019-07-28-DMA_mem_crash/bad_sem_mem.png?raw=true)
+![异常信号量内存示意图](/assets/images/2019-07-28-DMA_mem_crash/bad_sem_mem.png)
 
 不过，我们的程序托管（非hook，只是基于系统接口重新封装了一套接口）了内存申请/释放的接口，死机的时候会把当前已申请但还未释放的内存打印出来。打印信息如下，其中包含了函数名、行号、线程号、申请的内存大小、地址等信息：
 
@@ -155,7 +155,7 @@ Electric Fence（简称efence）是Linux平台定位堆内存非法访问问题�
 
 **注意：如果代码非法访问灰色区域，efence是检测不到的。**   
 
-![efence检测原理](/2019-07-28-DMA_mem_crash/efence_protect.jpg?raw=true)
+![efence检测原理](/assets/images/2019-07-28-DMA_mem_crash/efence_protect.jpg)
 
 
 根据上面的原理在本平台上实现了简单的efence代码，遗憾的是，无论是上边界检测还是下边界检测，问题都不再出现。这可能和下面两个因素有关：
@@ -171,7 +171,7 @@ Electric Fence（简称efence）是Linux平台定位堆内存非法访问问题�
 
 内存示意图如下所示（问题排查期间对部分字段做了冗余），图中的数字代表该字段的长度，单位是bit。最前面有个unused区域，这是因为，如果**返回给用户的地址按一定字节对齐**，前半部分就可能会浪费一小块内存。owner字段填充的是申请本块内存的线程号，通过该字段可以知道这块内存属于谁。  
 
-![内存布局示意图](/2019-07-28-DMA_mem_crash/mem_layout.PNG?raw=true)  
+![内存布局示意图](/assets/images/2019-07-28-DMA_mem_crash/mem_layout.PNG)  
 
 *注：该机制还可以用来统计内存的使用情况，检测有无内存泄露。*
 
@@ -188,7 +188,7 @@ Electric Fence（简称efence）是Linux平台定位堆内存非法访问问题�
 
 其中一次死机日志引起了我们的注意，如下图所示，红色方框中是受害信号量，已经面目全非了。奇怪的是，这块内存区域已经被其他线程占用（整个黄色背景区域，已经被线程0xa3921494占用），从内存标记看，这块内存是合法申请的。
 
-![内存重叠](/2019-07-28-DMA_mem_crash/mem_overflow.png?raw=true)
+![内存重叠](/assets/images/2019-07-28-DMA_mem_crash/mem_overflow.png)
 
 
 上图对应的内存申请记录如下：  
@@ -210,7 +210,7 @@ Electric Fence（简称efence）是Linux平台定位堆内存非法访问问题�
 
 我们设备上的内存接口示意图如下，共有两套接口，其中业务模块的接口做了内存申请释放的统计，可以确认受害信号量所在内存块没有被释放过，但是不排除已通过ThreadX自带的接口被误释放。
 
-![内存接口示意图](/2019-07-28-DMA_mem_crash/mem_api.png?raw=true)
+![内存接口示意图](/assets/images/2019-07-28-DMA_mem_crash/mem_api.png)
 
 
 ###  5.1 hook ThreadX自带的内存接口  ###
@@ -246,20 +246,20 @@ ThreadX的内存池分为Byte Pool和Block Pool两种，前者可分配任意大
 
 Byte Pool是用单向链表管理内存块的，下图是其初始状态。需要注意的是，该链表并不是维护在专有的内存区域，而是直接在本Byte Pool中，如果发生踩内存的情况，Byte Pool的链表有可能被破坏。
 
-![Byte Pool初始状态](/2019-07-28-DMA_mem_crash/byte_pool_init.png?raw=true)
+![Byte Pool初始状态](/assets/images/2019-07-28-DMA_mem_crash/byte_pool_init.png)
 
 Byte Pool的内存分配方式是first-fit manner（最先匹配原则，与之相对的是best-fit manner），即找到第一个大于用户申请大小的内存块，并根据一定的规则对该内存块进行切割（如果该内存块大小和用户申请内存相差不大，可能就不切割了，直接给用户使用），一分为二，前者给用户使用，后者作为空闲块，留着下次使用。内存申请过程中也可能对多个连续的空闲内存块进行合并操作。  
 
 Byte Pool首次分配后的状态如下图所示，注意，如果本内存块已被分配，owner ptr区域填写的是本Byte Pool的地址，如果本内存块未被分配，填充的是0xFFFFEEEE。
 
-![Byte Pool首次分配后状态](/2019-07-28-DMA_mem_crash/byte_pool_afer_first_alloc.png?raw=true)
+![Byte Pool首次分配后状态](/assets/images/2019-07-28-DMA_mem_crash/byte_pool_afer_first_alloc.png)
 
 
 ###  5.3 基于内存管理机制进行分析  ###
 
 根据ThreadX的内存管理机制，再次对4.2节提到的重叠内存区域进行分析。可以看到，下图中的[0xa39454d4, 0xa394556c)（两个`next ptr`之间的内存块）为一个合法的内存块，其owner ptr是正确的，next ptr也确实指向了下一个合法的内存块。而我们可怜的信号量就位于该内存块中，这块内存本属于这个信号量，在无人释放的情况下，又分配给了其他人。
 
-![同一块内存重复分配](/2019-07-28-DMA_mem_crash/mem_double_alloc.png?raw=true)  
+![同一块内存重复分配](/assets/images/2019-07-28-DMA_mem_crash/mem_double_alloc.png)  
 
 
 出现该现象，可能是两种原因导致的：  
@@ -284,7 +284,7 @@ void *__wrap_malloc (int c)
 
 跑出来的结果让人瞠目结舌，从下图可以看出，**红色方框里面的信号量完好无损，但是，这块区域已经被标记为free状态了**。接下来如果谁申请内存，这块区域可能就给别人了。
 
-![被释放的信号量](/2019-07-28-DMA_mem_crash/freed_sem.png?raw=true)  
+![被释放的信号量](/assets/images/2019-07-28-DMA_mem_crash/freed_sem.png)  
 
 
 不过本次实验中有个奇怪的现象，检测到信号量异常的位置，总是在malloc或者free的前面。如果是ThreadX的内存管理模块出了问题，检测到信号量异常的位置，应该在malloc或者free的后面。  
@@ -346,7 +346,7 @@ Demo实测证明该工具超级好用，完全可以满足我们的需求。感�
 
 驱动同事问“这个内存是干嘛的”，答“读写TF卡文件用的”。这时驱动同事恍然大悟，“怪不得watchpoint抓不住，搞不好就是它了，因为Cache操作不会触发watchpoint”。   
 
-![Cache操作不会触发内存监控](/2019-07-28-DMA_mem_crash/cache_no_watchpoint.png?raw=true)  
+![Cache操作不会触发内存监控](/assets/images/2019-07-28-DMA_mem_crash/cache_no_watchpoint.png)  
 
 
 读写文件是经过DMA拷贝的，而我们的系统上是有Cache的，这个过程涉及Cache和主存的同步。  
@@ -361,7 +361,7 @@ Demo实测证明该工具超级好用，完全可以满足我们的需求。感�
 
 下面的代码看起来很不可思议（全局数组mem_for_sd的后256KB，即上面提到的B，只在函数change_and_check_mem中使用），先把B赋值，然后过一会再检查有没有被修改。函数change_and_check_mem在后台线程中周期性执行。  
 
-![DMA验证试验一](/2019-07-28-DMA_mem_crash/change_and_check_mem_no_change.png?raw=true) 
+![DMA验证试验一](/assets/images/2019-07-28-DMA_mem_crash/change_and_check_mem_no_change.png) 
 
 
 更不可思议的是，问题很快就复现了。如下图所示，0xa182f710是B的起始地址，可以看到，有16个字节被破坏了。整个过程描述如下：
@@ -371,7 +371,7 @@ Demo实测证明该工具超级好用，完全可以满足我们的需求。感�
 3.	休眠10ms
 4.	对B检测，发现B的前16个字节被改为0x34，而0x34是B的历史值，红色方框里也应该被填充为0x49
 
-![DMA验证试验一结果](/2019-07-28-DMA_mem_crash/dma_crash_same_byte.png?raw=true) 
+![DMA验证试验一结果](/assets/images/2019-07-28-DMA_mem_crash/dma_crash_same_byte.png) 
 
 **该实验证明了：真凶在此！！！**  
 
@@ -381,7 +381,7 @@ Demo实测证明该工具超级好用，完全可以满足我们的需求。感�
 
 为了摸清规律，我们又进行了下面的实验。和上面实验的不同之处在于，B中的值不再是一样的，而是从一个随机值递增的，到0xFF则回归到0x0。
 
-![DMA验证试验二](/2019-07-28-DMA_mem_crash/change_and_check_mem_change.png?raw=true) 
+![DMA验证试验二](/assets/images/2019-07-28-DMA_mem_crash/change_and_check_mem_change.png) 
 
 
 问题很快就又出现了，结果如下图所示，0xa182f714是全局数组B的起始地址，可以看到，有12个字节被破坏了。整个过程描述如下：
@@ -391,7 +391,7 @@ Demo实测证明该工具超级好用，完全可以满足我们的需求。感�
 3.	休眠10ms
 4.	对B检测，发现B的前12个字节被改为11121314 15161718 191a1b1c（下图红色方框内的数据），而这些值是B的历史值。红色方框内的数值应该为26272829 2a2b2c2d 2e2f3031。
 
-![DMA验证试验二结果](/2019-07-28-DMA_mem_crash/dma_crash_change_byte.png?raw=true)
+![DMA验证试验二结果](/assets/images/2019-07-28-DMA_mem_crash/dma_crash_change_byte.png)
 
 从这次实验结果看，应该是B前面几个字节的值被缓存，而后又被赋值到原来的位置。不过值得注意的是，B这次被踩了12个字节，而不是16个字节。结合B的首地址和被踩字节数，可以发现最终得到的都是0x‭a182f720（该值为32的倍数）。也就是说被踩字节数和首地址是有关联的。
 
@@ -403,7 +403,7 @@ Demo实测证明该工具超级好用，完全可以满足我们的需求。感�
 
 DMA会导致Cache一致性问题。如下图所示，CPU的运算操作会修改Cache中的数据，而DMA会修改主存DDR中的数据，这就要求二者需要通过一定的机制保持同步，即Cache一致性。
 
-![DMA框架](/2019-07-28-DMA_mem_crash/cpu_cache_mem_stor.png?raw=true)  
+![DMA框架](/assets/images/2019-07-28-DMA_mem_crash/cpu_cache_mem_stor.png)  
 
 
 下面的流程图展示了在内存读写过程中，Cache是如何与主存同步的，注意下面三点：  
@@ -412,7 +412,7 @@ DMA会导致Cache一致性问题。如下图所示，CPU的运算操作会修改
 - Cache未命中的时候，是从主存中读取原始数据的
 - CPU修改Cache中的数据后，并未直接回写到主存，而是将该Cache标记为dirty  
 
-![Cache工作原理](/2019-07-28-DMA_mem_crash/cache_cohorence.png?raw=true)  
+![Cache工作原理](/assets/images/2019-07-28-DMA_mem_crash/cache_cohorence.png)  
 
 
 了解了上面的原理，我们结合DMA分析下磁盘文件的读写流程。  
@@ -425,14 +425,14 @@ DMA会导致Cache一致性问题。如下图所示，CPU的运算操作会修改
 从磁盘读数据：
 
 1. 启动DMA将数据从磁盘搬运到主存DDR
-2. 将对应主存区域的Cache全部置为无效（invalid cache，注意不是dirty，这样程序访问的时候，才会从主存读取最新数据)
+2. 将对应主存区域的Cache全部置为无效（invalid cache，注意不是dirty，这样程序访问的时候，才会从主存读取最新数据）
 
 
 ###  6.5 幕后主使在此  ###
 
 驱动同事分析DMA相关代码，发现本平台的Cache Line为32字节，DMA操作的时候，未考虑Cache Line的对齐问题，导致Cache与主存的一致性出了问题，进而在文件读取的时候破坏了相邻的内存（大家可以思考下，为什么写文件的时候没有出问题）。以6.3节第二次实验为例，具体原因如下：
 
-1. 程序从文件中读取256KB的数据到下图中的内存区域A，和A紧挨着的内存区域B为另一个线程的，B的前12字节在主存中的内容和Cache中的内容不一致（结合上面介绍的知识，我们知道这是正常的）。 ![invalid cache前](/2019-07-28-DMA_mem_crash/mem_status_before_invalid_cache.png?raw=true)  
+1. 程序从文件中读取256KB的数据到下图中的内存区域A，和A紧挨着的内存区域B为另一个线程的，B的前12字节在主存中的内容和Cache中的内容不一致（结合上面介绍的知识，我们知道这是正常的）。 ![invalid cache前](/assets/images/2019-07-28-DMA_mem_crash/mem_status_before_invalid_cache.png)  
 
 2. DMA将文件读取到主存的A区域后，需要将A区域对应的Cache invalid（失效）掉，以保证Cache和主存中的数据是一致的。  
    *注:实际上，A对应的内存区域可能已经不在Cache中了，但DMA不知道，为了保证数据的一致性，它必须将A对应的Cache invalid掉。*  
@@ -442,7 +442,7 @@ DMA会导致Cache一致性问题。如下图所示，CPU的运算操作会修改
 		ROUND_UP(0xa182f714 + 0x40000, 32) = 0x‭a182f720  
 
 4. B现在最新的数值是在Cache中，而上面的操作会将B前12字节对应的Cache invalid掉。如下图所示，后续程序再访问B的前12字节，cache未命中，只有从主存中取，结果取到的是历史值。
-![invalid cache前](/2019-07-28-DMA_mem_crash/mem_status_after_invalid_cache.png?raw=true)
+![invalid cache前](/assets/images/2019-07-28-DMA_mem_crash/mem_status_after_invalid_cache.png)
 
 **就这样，B躺着中枪了！！！**  
 
@@ -463,7 +463,7 @@ DMA会导致Cache一致性问题。如下图所示，CPU的运算操作会修改
 
 比较合理的解决方法是，驱动层保证。如下图所示，驱动层识别到首地址不是32字节对齐的，就先用一个临时内存块（该临时内存块首地址32字节对齐，大小是32字节倍数）做前12字节的DMA，然后将前12个字节通过memcpy拷贝到主存的0xa17ef714~0xa17ef720，接下来的1024字节因为满足对齐和大小要求，所以可以直接进行DMA，尾部剩余14字节只满足首地址对齐的要求，不满足大小是12字节倍数的要求，所以也要借助临时内存完成数据搬运。
 
-![驱动层规避方案](/2019-07-28-DMA_mem_crash/bsp_solution.png?raw=true)
+![驱动层规避方案](/assets/images/2019-07-28-DMA_mem_crash/bsp_solution.png)
 
 
 ## 8. 总结 ##
