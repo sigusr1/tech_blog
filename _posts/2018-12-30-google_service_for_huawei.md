@@ -22,7 +22,7 @@ tags: [环境搭建, Google]
 安装完成后手机会重启，然后根据提示开启google服务的各项权限，后面再配合vpn（本人使用的是影梭，Shadowsocks），就可以方便使用google系列应用。
 
 可以从下面的链接下载gms安装器：
-[gms.apk](/2018-12-30-google_service_for_huawei/gms.apk)
+[gms.apk](/assets/images/2018-12-30-google_service_for_huawei/gms.apk)
 
 ## 参考资料 ##
 1. [https://cn.club.vmall.com/thread-15131985-1-3.html](https://cn.club.vmall.com/thread-15131985-1-3.html)
