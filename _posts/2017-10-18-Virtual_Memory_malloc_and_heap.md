@@ -291,10 +291,10 @@ DESCRIPTION
 
 `program break`是虚拟内存中数据段的结束位置， 如下图所示：
 
-![](/virtual_memory/program-break-before.png?raw=true)
+![](/assets/images/virtual_memory/program-break-before.png)
 
 `malloc`通过调用`brk`或`sbrk`增加`program break`的值，从而创建可以通过`malloc`动态分配的内存空间。所以堆是进程的数据段的延伸。  
-![](/virtual_memory/program-break-after.png?raw=true)
+![](/assets/images/virtual_memory/program-break-after.png)
 
 上面示例中首次调用`brk`(`brk(0)`)返回的是`program break`的当前地址。第二次调用则通过移动`program break`的位置增加了内存空间(从`0xe70000` 到 `0xe91000`)。上面的例子中，堆段起始于`0xe70000`， 结束于`0xe91000`。我们看下`/proc/[pid]/maps`文件,是否真的如此：
 
@@ -670,7 +670,7 @@ julien@holberton:~/holberton/w/hackthevm3$
 ```
 现在我们可以回答上一篇文章中的一个问题：`malloc`每分配一块内存，就在这块内存前面的16字节中存放该内存块的大小。内存被释放的时候，`free`函数会使用这个结构，并将这块内存放在空闲列表中，以待后续`malloc`的时候使用。
 
-![](/virtual_memory/0x10-malloc.png?raw=true)
+![](/assets/images/virtual_memory/0x10-malloc.png)
 
 但是问题又来了：这16个字节的前8个字节是干嘛的呢？看起来它们总是0，难道是填充字节吗？
 
@@ -824,7 +824,7 @@ julien@holberton:~/holberton/w/hackthevm3$
 ```
 从上面的打印可以看出，如果前面的内存块被释放了，`malloc`返回地址前面16个字节中的前8个字节代表的就是前一内存块的大小。所以，`malloc`分配的内存块的完整示意图如下：
 
-![](/virtual_memory/malloc-chunk.png?raw=true)
+![](/assets/images/virtual_memory/malloc-chunk.png)
 
 另外，16个字节中后8字节（代表本内存块大小的8个字节）中的第一个比特位(源码中的标识位`P`)代表上一个内存块是否被占用（`1`-被占用，`0`-未占用）。所以更新后的实验程序如下 (`8-main.c`)：
 
@@ -1098,7 +1098,7 @@ randomize_range(unsigned long start, unsigned long end, unsigned long len)
 
 结合前面我们学到的知识，可以画出新的进程地址空间图：
 
-![](/virtual_memory/virtual_memory_diagram_v2.png?raw=true)
+![](/assets/images/virtual_memory/virtual_memory_diagram_v2.png)
 
 ## 九、malloc(0) ##
 
