@@ -110,25 +110,25 @@ int main(void)
 
 刚进入`main`函数还未执行任何指令的时候，栈状态如下图所示：  
 
-![main函数栈初始状态](/virtual_memory/stack/main_stack_init_status.png?raw=true)
+![main函数栈初始状态](/assets/images/virtual_memory/stack/main_stack_init_status.png)
 
 
 指令`push rbp`把寄存器`rbp`的值存在了栈上，并使栈向下生长（即栈顶下移，同时寄存器`rsp`指向新的栈顶），如下图所示：  
 
 
-![rbp入栈后的栈状态](/virtual_memory/stack/main_stack_after_push.png?raw=true)
+![rbp入栈后的栈状态](/assets/images/virtual_memory/stack/main_stack_after_push.png)
 
 
 指令`mov rbp, rsp`将寄存器`rsp`的值拷贝到寄存器`rbp`，现在二者都指向新栈帧的栈顶，如下图所示：  
 
 
-![rbp、rsp均指向栈顶](/virtual_memory/stack/main_stack_after_mov.png?raw=true)
+![rbp、rsp均指向栈顶](/assets/images/virtual_memory/stack/main_stack_after_mov.png)
 
 
 指令`sub rsp, 0x10`在栈上为局部变量开辟了存储空间，即从`rbp`所指地址到`rsp`所指地址的内存区域（16个字节），足以存储`int`型变量`a`。这块内存空间被称为**栈帧**。任何一个定义了局部变量的函数，都会使用栈帧来存储这些局部变量。
 
 
-![开辟内存空间后的栈状态](/virtual_memory/stack/main_stack_after_create_space.png?raw=true)
+![开辟内存空间后的栈状态](/assets/images/virtual_memory/stack/main_stack_after_create_space.png)
 
 
 ### 2、使用局部变量 ###
@@ -147,7 +147,7 @@ a = 972;
 
 下图是赋值操作后栈和寄存器的状态：  
 
-![赋值后栈和寄存器的状态](/virtual_memory/stack/main_stack_after_assign.png?raw=true)
+![赋值后栈和寄存器的状态](/assets/images/virtual_memory/stack/main_stack_after_assign.png)
 
 
 ### 3、自动销毁内存 ###
@@ -162,9 +162,9 @@ a = 972;
 - 栈、寄存器`rbp`和`rsp`均恢复成调用`main`函数前的状态
 
 
-![leave后栈和寄存器的状态1](/virtual_memory/stack/lacal_var_after_func1_leave.png?raw=true)
+![leave后栈和寄存器的状态1](/assets/images/virtual_memory/stack/lacal_var_after_func1_leave.png)
 
-![leave后栈和寄存器的状态2](/virtual_memory/stack/main_stack_after_leave2.png?raw=true)
+![leave后栈和寄存器的状态2](/assets/images/virtual_memory/stack/main_stack_after_leave2.png)
 
 
 
@@ -288,16 +288,16 @@ int main(void)
 
 函数`func1`返回前的栈如下图所示：  
 
-![函数func1返回前的栈示意图](/virtual_memory/stack/lacal_var_befor_func1_leave.png?raw=true)
+![函数func1返回前的栈示意图](/assets/images/virtual_memory/stack/lacal_var_befor_func1_leave.png)
 
 函数`func1`返回的时候，会调用指令`leave`。前面解释过，该指令会导致栈帧收缩，如下图所示：  
 
 
-![函数func1返回后的栈示意图](/virtual_memory/stack/lacal_var_after_func1_leave.png?raw=true)
+![函数func1返回后的栈示意图](/assets/images/virtual_memory/stack/lacal_var_after_func1_leave.png)
 
 当我们调用函数`func2`时，它的栈帧如下图所示，局部变量的值就是当前栈上残留的值。这就是`func2`中变量`a`、`b`、`c`的值和`func1`一致的原因了。
 
-![函数func2的栈帧](/virtual_memory/stack/lacal_var_when_func2_enter.png?raw=true)
+![函数func2的栈帧](/assets/images/virtual_memory/stack/lacal_var_when_func2_enter.png)
 
 
 
@@ -314,11 +314,11 @@ int main(void)
 
 该汇编指令先把下一条指令所在的内存地址存储到栈上，然后再跳转到`func1`。这样，在执行`func1`的指令前，栈顶包含了函数`func1`调用完成后的返回地址，寄存器`rsp`指向该区域，如下图所示：  
 
-![call前的栈帧](/virtual_memory/stack/call_statck.png?raw=true)
+![call前的栈帧](/assets/images/virtual_memory/stack/call_statck.png)
 
 当`func1`的栈帧形成后，完整的栈帧如下所示：  
 
-![func1的栈帧](/virtual_memory/stack/func1_stack.png?raw=true)
+![func1的栈帧](/assets/images/virtual_memory/stack/func1_stack.png)
 
 
 ## 六、通过寄存器探索栈内容 ##
@@ -384,7 +384,7 @@ int main(void)
 
 从上面的章节我们了解到，`func1`的栈帧如下所示：  
 
-![func1的栈帧](/virtual_memory/stack/func1_stack.png?raw=true)
+![func1的栈帧](/assets/images/virtual_memory/stack/func1_stack.png)
 
 ### 1、访问局部变量 ###
 
