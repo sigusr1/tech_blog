@@ -19,7 +19,7 @@ tags:  [USAP]
 - 默认情况下，来一个启动app的请求，zygote fork一个进程，并在这个进程中执行app代码，如下图黑色路径所示。  
 - 那么，是否可以预先fork一些进程，请求到来的时候直接拿来用，以此加快app启动速度？USAP就是做这个事情的。如下图红色路径所示，zygote先fork一些进程放在**USAP进程池**，要启动app的时候，就从池子里拿一个使用。
 
-![zygote fork usap示意图](http://data.coderhuo.tech/2025-07-20-android_usap/usap_overview.jpg)
+![zygote fork usap示意图](/assets/images/2025-07-20-android_usap/usap_overview.jpg)
 
  > **USAP进程是一次性的，用完之后不能再放回池子里了**，zygote进程会fork新的进程填充USAP进程池。
 {: .prompt-info }
@@ -59,7 +59,7 @@ zygote创建USAP进程，有以下触发源：
 - USAP进程退出（死了一个，再fork一个补上）
 - USAP进程被实例化为app(用掉一个，再fork一个补上)
 
-![USAP进程创建流程图](http://data.coderhuo.tech/2025-07-20-android_usap/usap_create.jpg)
+![USAP进程创建流程图](/assets/images/2025-07-20-android_usap/usap_create.jpg)
 
 system_server在请求zygote创建进程的的时候，先调用`ZygoteProcess.informZygotesOfUsapPoolStatus`通知zygote准备USAP进程，这个调用是进程间的IPC，要考虑开销，system_server在下面两种情况检查`ZygoteConfig.USAP_POOL_ENABLED`的值是否发生了变化，只有变化的时候才调用上述函数：
 - 首次请求zygote创建进程
@@ -198,7 +198,7 @@ USAP进程退出（上图3.1的流程）或者实例化为app(上图3.2的流程
 
 整体流程如下所示：
 
-![USAP进程实例化示意图](http://data.coderhuo.tech/2025-07-20-android_usap/usap_to_app.jpg)
+![USAP进程实例化示意图](/assets/images/2025-07-20-android_usap/usap_to_app.jpg)
 
 system_server在下面的代码中调用`ZygoteProcess.attemptUsapSendArgsAndGetResult`请求USAP执行app代码，该请求是通过套接字`Zygote.USAP_POOL_PRIMARY_SOCKET_NAME`发送的。可以看到system_server先尝试使用USAP，不行的话再使用zygote。
 
@@ -319,7 +319,7 @@ USAP进程退出事件是由zygote进程监听到的，分两种情况处理：
 - 实例化为app前，zygote需要重新填充USAP进程池（奇怪的是zygote也通知了system_server，按说没必要，因为这时候USAP进程和system_server还没建立任何联系）。
 - 实例化为app后，zygote通知system_server应用进程退出了
 
-![USAP进程退出流程](http://data.coderhuo.tech/2025-07-20-android_usap/usap_exit.jpg)
+![USAP进程退出流程](/assets/images/2025-07-20-android_usap/usap_exit.jpg)
 
 zygote进程监听了子进程退出的信号：
 ```c
