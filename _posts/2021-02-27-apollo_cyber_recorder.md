@@ -13,7 +13,7 @@ apollo中提供了cyber_recorder工具，可以将报文录制下来，保存为
 
 cyber_recorder录制的文件结构如下图所示，各组成部分由protocolbuffers描述，protocolbuffers文件路径为`cyber/proto/record.proto`。下面介绍几个重要的组成单元：
 
-![逻辑结构](/2021-02-27-apollo_cyber_recorder/logic_format.png?raw=true)
+![逻辑结构](/assets/images/2021-02-27-apollo_cyber_recorder/logic_format.png)
 
 - Header：文件头部信息，用来描述整个文件的信息。
   - Header位于文件的开始部分
@@ -56,7 +56,7 @@ cyber_recorder录制的文件结构如下图所示，各组成部分由protocolb
   - time:接收端收到该报文的时间。**TBD：这里使用的是接收到消息的时刻，而不是消息产生的时刻，感觉不太合理，不知是否有其他考虑**。
   - content为RawMessage，即examples.proto中Chatter的protocolbuffers表示，该字段可以经由Channel中的proto_desc反序列化为Chatter对象。
 
-- Index：索引信息，位于尾部(Header中的index_position字段指向Index的起始位置），平时只是维护在内存中，只有在文件关闭前才会写到文件中（报文录制过程中如果出现异常可能导致录制文件无法打开）。共有三种索引：
+- Index：索引信息，位于尾部（Header中的index_position字段指向Index的起始位置），平时只是维护在内存中，只有在文件关闭前才会写到文件中（报文录制过程中如果出现异常可能导致录制文件无法打开）。共有三种索引：
   - 指向Channel的索引
   - 指向ChunkHeader的索引
   - 指向ChunkBody的索引
