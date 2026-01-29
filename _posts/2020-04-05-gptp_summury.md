@@ -16,7 +16,7 @@ tags: [AVB, gPTP]
 
 不知道大家还记得军训练习齐步走的场景吗？  
 
-![齐步走](/2020-04-05-gptp_summury/walk_sync.jpg?raw=true)
+![齐步走](/assets/images/2020-04-05-gptp_summury/walk_sync.jpg)
 
 齐步走的动作要领你还记得吗？  
 - 教官首先发出“齐步-----走”的命令，大家听到“齐步”二字后，开始调整动作，最终所有人实现动作同步。
@@ -37,10 +37,10 @@ tags: [AVB, gPTP]
 3. 其他时钟根据同步信号同步自己的本地时钟。本地时钟的同步包含下面两个方面（通俗点讲就是，找到同步点，然后以同样的频率运行）：
 
    - **绝对时间同步**：如下图所示，它要求在同一时刻，A和B的显示时间一致，又称为**相位同步**。
-   ![绝对时间同步](/2020-04-05-gptp_summury/phase_synchronization.jpg?raw=true)
+   ![绝对时间同步](/assets/images/2020-04-05-gptp_summury/phase_synchronization.jpg)
 
    - **相对时间同步**：如下图所示，虽然在同一时刻A和B的绝对时间不同，但是相邻采样点之间的差值是相同的。也就是说，**A和B对时间的度量是一致的**（比如两个采样点之间的间隔A时钟测量出来是1ms，B时钟测量出来也是1ms）。它要求A和B的频率保持一致，又称为**频率同步**。  
-   ![相对时间同步](/2020-04-05-gptp_summury/frequency_synchronization.jpg?raw=true)
+   ![相对时间同步](/assets/images/2020-04-05-gptp_summury/frequency_synchronization.jpg)
   
 
 gPTP就是为了解决以上问题而诞生的。和其他校时协议不同的是，通过约束网络内的节点，它可以达到ns级的精度（6跳以内任意节点间最大时钟误差不超过1us），因此在车载、工业控制等对实时性要求较高的领域得到了应用。
@@ -49,7 +49,7 @@ gPTP就是为了解决以上问题而诞生的。和其他校时协议不同的�
 
 先从下图直观感受下gPTP的校时机制，后面会逐步详细介绍：  
 
-![gPTP校时示意图](/2020-04-05-gptp_summury/ptp_sync.jpg?raw=true)
+![gPTP校时示意图](/assets/images/2020-04-05-gptp_summury/ptp_sync.jpg)
 
 ### 1. 体系结构 ###
 
@@ -61,7 +61,7 @@ AVB域内的每一个节点都是一个时钟，由以下两个角色组成：
 下图是一个简单的gPTP网络拓扑图：  
 
 
-![gPTP体系结构](/2020-04-05-gptp_summury/gptp_topology.jpg?raw=true) 
+![gPTP体系结构](/assets/images/2020-04-05-gptp_summury/gptp_topology.jpg) 
 
 它包含两种类型的节点：
 - **Time-aware end station**：这类设备可以是系统内的主时钟（时间源，Grandmaster），也可以是从时钟（被校时的设备）。图中标注了802.1AS endpoint的就是这种设备。
@@ -81,7 +81,7 @@ gPTP中的主时钟，既可以默认指定，也可以通过BMCA(Best Master Cl
 
 下图包含一个主时钟（Master time）和一个从时钟(Slave time)，二者时间不同步。现在要把从时钟的时间校准到主时钟的时间，其中t1、t4为主时钟对应的时间，t2、t3为从时钟对应的时间。  
 
-![通用校时流程](/2020-04-05-gptp_summury/general_sync_time_method.png?raw=true)
+![通用校时流程](/assets/images/2020-04-05-gptp_summury/general_sync_time_method.png)
 
 主要流程如下：  
 1. 主时钟在t1时刻发送Sync命令，从时钟在t2时刻收到同步指令。这时候从时钟并不知道主时钟是在什么时候发出这个Sync命令的，但是知道自己是在t2时刻收到该命令的。
@@ -116,7 +116,7 @@ gPTP中的主时钟，既可以默认指定，也可以通过BMCA(Best Master Cl
 
 理想情况下，ratio的值应该是1，如果大于1，说明从时钟走的快了，如果小于1，说明走的慢了。从时钟可以根据该值调整自己的频率。  
 
-![谐振](/2020-04-05-gptp_summury/Synchronization.jpg?raw=true)
+![谐振](/assets/images/2020-04-05-gptp_summury/Synchronization.jpg)
 
 
 ## 三、影响校时精度的因素 ##
@@ -129,7 +129,7 @@ gPTP中的主时钟，既可以默认指定，也可以通过BMCA(Best Master Cl
 
 前面提到的校时流程中，我们假设传输时延是对称的，即报文从A传到B和从B传到A耗时相同，实际情况中，路径有可能是不对称的，如下图所示，t<sub>ms</sub>和t<sub>sm</sub>有可能是不相等的。这会导致校时误差。
 
-![传输时延不对称](/2020-04-05-gptp_summury/path_delay_async.png?raw=true)
+![传输时延不对称](/assets/images/2020-04-05-gptp_summury/path_delay_async.png)
 
 gPTP对策：
 - 要求网络内的节点都是时间敏感的
@@ -152,7 +152,7 @@ gPTP对策：Bridge设备必须具有测量驻留时间的能力，在转发报�
 - 协议栈缓冲带来的延时是不固定的
 - 操作系统调度导致的随机延时
 
-![传输时延不对称](/2020-04-05-gptp_summury/hardware_timestamp.png?raw=true)
+![传输时延不对称](/assets/images/2020-04-05-gptp_summury/hardware_timestamp.png)
 
 
 
@@ -181,13 +181,13 @@ IEEE 1588支持两种路径延时测量方式：End-to-End（E2E) 和 Peer-to-Pe
 - master节点变更时，E2E需要重新测量到新master节点的路径延时，P2P只需关心相邻节点。
 - E2E方式允许网络中有普通的switch（透传PTP报文即可，由于驻留时间随机，会影响测量精度），而P2P要求网络中的switch必须全部支持P2P。
 - E2E机制中，校时报文和路径测量报文是耦合在一起的（第二章第3部分描述的就是典型的End-to-End的流程，它使用Sync、Follow_Up、Delay_Req、Delay_Resp四个消息，同时计算时钟偏差和路径测量）；P2P机制中有独立的报文负责路径测量，把校时和路径测量解耦了。
-![e2e_vs_p2p](/2020-04-05-gptp_summury/e2e_vs_p2p.jpg?raw=true)
+![e2e_vs_p2p](/assets/images/2020-04-05-gptp_summury/e2e_vs_p2p.jpg)
 
 gPTP要求使用P2P方式，并且要求网络中所有设备都支持PTP协议，路径传输延时测量只在相邻节点间进行。它使用Pdelay_Req、Pdelay_Resp、Pdelay_Resp_Follow_Up消息来测量路径传输延时。 
 
 *注意Peer-to-Peer中没有使用Sync报文，而是专门为路径测量新建了几个报文，降低了复杂度。*  
 
-![p2p延时测量](/2020-04-05-gptp_summury/p2p.png?raw=true)
+![p2p延时测量](/assets/images/2020-04-05-gptp_summury/p2p.png)
 
 
 具体流程如下：  
@@ -209,11 +209,11 @@ PTP时钟可以分为两类：One-Step Clock和Two-Step Clock。
 
 还记得下图Follow_Up消息的作用吗？ 它只是为了把t1的值传给slave节点。这种时钟就是Two-Step Clock， 它的事件报文（Sync等）中不携带时间信息，需要用另外一条普通报文传输时间信息（用来描述上一条事件报文是在什么时候发送的）。  
 
-![two-step-clock](/2020-04-05-gptp_summury/general_sync_time_method.png?raw=true)  
+![two-step-clock](/assets/images/2020-04-05-gptp_summury/general_sync_time_method.png)  
 
 如果t1能在Sync报文本身中传递给slave节点，就节省了一条报文，如下图所示，这是One-step clock的做法。这种时钟对硬件要求比Two-step clocks高，成本也比较高。
 
-![one-step-clock](/2020-04-05-gptp_summury/one-step-clock.png?raw=true)
+![one-step-clock](/assets/images/2020-04-05-gptp_summury/one-step-clock.png)
 
 
 理论上来讲，同一个网络内可以存在两种类型的时钟，并且时钟类型不会影响校时精度。  
@@ -227,7 +227,7 @@ gPTP要求使用Two-step时钟，因为这种机制对硬件要求较低，方�
 - 假设下面的三个设备都是One-Step的Clock，即Sync报文发出后，不需要额外的Follow_Up报文告知Sync报文是在哪个时刻发送的。（实际802.1AS要求时钟必须是Two-Step的）
 - 假设各设备已通过前面介绍的Peer-to-Peer机制测量出路径传输延时path_delay1、path_delay2
 
-![gptp_work_flow](/2020-04-05-gptp_summury/gptp_work_flow.jpg?raw=true)
+![gptp_work_flow](/assets/images/2020-04-05-gptp_summury/gptp_work_flow.jpg)
 
 校时流程如下：
 1. Grandmaster时钟在t1时刻发送时间同步报文Sync到Bridge，报文Sync的originTimestamp中填充时间信息t1，矫正域correction填充ns的小数部分（Sync报文的时间戳部分只能表示秒和纳秒，不足1纳秒的只能放在矫正域）。
@@ -247,7 +247,7 @@ Bridge在t2时刻收到Sync报文，并从中解析出Grandmaster是在t1时刻�
 	correction = old_value_of_ correction + path_delay1 + residence_time 
 ```
 **注意：Bridge不修改Sync报文的originTimestamp字段（该字段为Grandmaster发出Sync报文的时间）。**
-![Bridge work flow](/2020-04-05-gptp_summury/gptp_sync_in_switch.png?raw=true)
+![Bridge work flow](/assets/images/2020-04-05-gptp_summury/gptp_sync_in_switch.png)
 
 5. End-Point在t4时刻收到Sync报文，并从中解析出Grandmaster是在t1时刻发送该报文的，以及Bridge矫正后的correction。在t4时刻，Grandmaster的时钟显示的值应该是：  
 ```
@@ -271,7 +271,7 @@ Bridge在t2时刻收到Sync报文，并从中解析出Grandmaster是在t1时刻�
 ```
   其中，master_t1和矫正域的值在Sync报文中携带，传输延时可以通过前面的方法测量。
 
-![相对时钟同步](/2020-04-05-gptp_summury/Synchronization_frequency.jpg?raw=true)
+![相对时钟同步](/assets/images/2020-04-05-gptp_summury/Synchronization_frequency.jpg)
 
 根据前面介绍的相对时钟同步原理，可以通过下面的公式判断自己的频率和主时钟是否保持一致：  
 
