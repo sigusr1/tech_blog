@@ -1,0 +1,6 @@
+1. 编译：在本目录执行 make 命令
+2. 运行：
+    2.1 在本目录执行 
+      export LD_LIBRARY_PATH=./libA:./libB:$LD_LIBRARY_PATH
+    2.2 在本目录执行
+      ./exe/main

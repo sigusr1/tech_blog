@@ -14,7 +14,7 @@ tags:  [elf]
 
 ## 1. 示例程序
 
-程序结构如下所示(完整例子参考：[demo](http://data.coderhuo.tech/2024-06-27-double_link_global_symbol/code/))
+程序结构如下所示(完整例子参考：[demo](https://github.com/sigusr1/tech_blog/tree/main/assets/images/2024-06-27-double_link_global_symbol/code/))
 - 静态库libCommon.a包含静态变量kProblemSymbol
 - 动态库libA.so、libB.so都链接了libCommon.a
 - 可执行程序C同时依赖动态库libA.so、libB.so
@@ -22,7 +22,7 @@ tags:  [elf]
 > 有经验的同学估计一眼就看出来问题在哪了：这种情况下libCommon应该用动态库，而不是静态库。
 {: .prompt-info }
 
-![程序框图](/2024-06-27-double_link_global_symbol/framework.jpg)
+![程序框图](/assets/images/2024-06-27-double_link_global_symbol/framework.jpg)
 
 ### 1.1 libCommon.a
 
