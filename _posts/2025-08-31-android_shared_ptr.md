@@ -53,7 +53,7 @@ Android中这套智能指针机制最初从binder中诞生，后来作为通用�
 - 弱指针wp持有对象Foo的指针，也持有控制块指针，执行`incWeak`/`decWeak`对弱引用计数+1/-1，当弱引用计数为0时，释放控制块`weakref_impl`。
 - 弱指针可以通过`promote`函数尝试转化为强指针。
 
-![智能指针原理](http://data.coderhuo.tech/2025-08-31-android_shared_ptr/android_sp_wp.png)
+![智能指针原理](/assets/images/2025-08-31-android_shared_ptr/android_sp_wp.png)
 
 
 控制块`weakref_impl`是在构造基类RefBase时创建的，也就是创建Foo对象的时候就会创建控制块，控制块和对象Foo不在同一个内存块。`weakref_impl`中最关键的两个变量是强引用计数`mStrong`、弱引用计数`mWeak`:
