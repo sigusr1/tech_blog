@@ -9,7 +9,7 @@ tags: [共享内存, hash]
 
 下图所示的共享内存有一个writer和多个reader，为了提高数据存取效率，共享内存中的数据需要按hash组织。  
 
-![共享内存示意图](/2021-08-01-hash_in_shared_memory/shared_memory.png?raw=true)
+![共享内存示意图](/assets/images/2021-08-01-hash_in_shared_memory/shared_memory.png)
 
 
 *注：本文不讨论writer和和reader之间的同步问题，具体可由信号量、文件锁等方式实现。*
@@ -17,7 +17,7 @@ tags: [共享内存, hash]
 
 初步想法是将整块共享内存划分成一个下标为0~n的数组，如下图所示。数据Record的key经过Hash计算后得到hashcode，然后将该值映射为数组的下标，直接通过下标访问数组，将Record的key和value存储在对应的位置。
 
-![分区示意图](/2021-08-01-hash_in_shared_memory/split_region_by_record.png?raw=true)
+![分区示意图](/assets/images/2021-08-01-hash_in_shared_memory/split_region_by_record.png)
 
 但是Hash存在冲突的情况，即两个不同的Record经过Hash映射，得到的下标可能是相同的。  
 
@@ -25,7 +25,7 @@ tags: [共享内存, hash]
 
 *注：冲突较多的时候，可以考虑换hash函数。*  
 
-![冲突区示意图](/2021-08-01-hash_in_shared_memory/split_region_by_record_collision.png?raw=true)
+![冲突区示意图](/assets/images/2021-08-01-hash_in_shared_memory/split_region_by_record_collision.png)
 
 
 **数据写入流程**如下：
@@ -35,7 +35,7 @@ tags: [共享内存, hash]
 
 最终建立了下图所示的链接关系：
 
-![hash链表](/2021-08-01-hash_in_shared_memory/collision_proc.png?raw=true)
+![hash链表](/assets/images/2021-08-01-hash_in_shared_memory/collision_proc.png)
 
 说明：
   - 如果预留区已经没有空闲存储单元，只能报错了
@@ -49,7 +49,7 @@ tags: [共享内存, hash]
     - 每条链表的长度是不固定的，默认只包含一个头节点，运行期间动态的增加、删除节点
   - 最后一条链表是为了解决hash冲突预留的节点，运行过程中，会根据需要动态的添加到上面0~k链表的后面，当数据释放的时候，再归还到空闲列表 
 
-![hash链表抽象示意](/2021-08-01-hash_in_shared_memory/collision_proc_list.png?raw=true)
+![hash链表抽象示意](/assets/images/2021-08-01-hash_in_shared_memory/collision_proc_list.png)
 
 
 **数据读取过程**：把key做hash映射，得到对应的数组下标，也就知道了该在哪个链表中找数据，依次遍历对应的链表，比较key是否一致，如果一致就找到了对应的记录。   
