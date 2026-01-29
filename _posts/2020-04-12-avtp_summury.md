@@ -155,7 +155,7 @@ Max Transit Time的通用定义如下，其中tn为Talker到第n个Listener的�
 1. AVTP假设网络中各个节点的媒体时钟都是自由运行的（也就是相互之间不同步）。为了便于接收端恢复媒体时钟，在发送端，Talker把媒体时钟嵌入在展示时间戳中的（采样点对应gPTP的某个时刻），如下图所示：  
 ![talker_media_clock](/assets/images/2020-04-12-avtp_summury/talker_media_clock.png)  
 
-2. 在接收端，媒体时钟从展示时间戳中恢复（AVTP Presentation Time和本地gPTP时间对比，二者同步的时刻对应一个Media Clock的采样点），进而控制音视频的播放。
+2. 在接收端，媒体时钟从展示时间戳中恢复（AVTP Presentation Time和本地gPTP时间对比，二者同步的时刻对应一个Media Clock的采样点），进而控制音视频的播放：  
 ![listener_media_clock](/assets/images/2020-04-12-avtp_summury/listener_media_clock.png)  
 
 3. 媒体时钟恢复模块示意图如下所示：  
