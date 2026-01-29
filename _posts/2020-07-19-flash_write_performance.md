@@ -33,23 +33,23 @@ tags: [垃圾回收, 擦写均衡]
 
   用户首先保存一个4KB大小的文本文件到TF卡。TF卡控制器接收到命令后，发现所有的page都是空的（黄色代表空），就把该文档保存在了第一个page上。
 
-  ![写入文件](/2020-07-19-flash_write_performance/1.png)
+  ![写入文件](/assets/images/2020-07-19-flash_write_performance/1.png)
 
   用户继续保存一个8KB的图片到TF卡。TF卡控制器收到命令后，把它存在了紧挨着的两个page。这时候系统显示TF卡60%的空间已使用。
 
-  ![继续写入文件](/2020-07-19-flash_write_performance/2.png)
+  ![继续写入文件](/assets/images/2020-07-19-flash_write_performance/2.png)
 
 
   用户这时候删除了原来的文本文件。TF卡控制器此时可能根本感知不到这个操作（FTL层就搞定了），在它看来，现在5个page中，3个被占用，2个空闲。
 
   如果这时候用户想存储12KB的图片到TF卡（需要占用3个page），操作系统知道第一个page可以被覆盖（上一步删除了），再加上最后两个空闲的page，可以放下这张图片。所以它告诉TF卡控制器，图片的前4KB覆盖第一个page，后8KB写入最后的两个page。控制器收到这个指令就傻眼了，因为在它看来只有最后的两个page可以被写入，另外一个page需要先擦除再写入。
 
-  ![删除文本文件](/2020-07-19-flash_write_performance/3b.png)
+  ![删除文本文件](/assets/images/2020-07-19-flash_write_performance/3b.png)
 
 
   我们知道，擦除不能以page为单位，必须以block为单位。为了回收第一个page，我们必须把整个block中的数据读取到内存中（下图步骤1、2所示），这个内存可以是TF卡内的内存（有些卡不一定有），也可以是TF卡插入的主机的内存。然后在内存中修改对应的数据，把新数据写入（步骤3、4所示）。最后把整个block擦除，再把修改完成的数据写回到TF卡（步骤5所示）。
 
-  ![先擦除再写入](2020-07-19-flash_write_performance/3.png)
+  ![先擦除再写入](/assets/images/2020-07-19-flash_write_performance/3.png)
 
   在最后一次存储操作中，写入的有效数据是12KB，但是我们先读取了12KB，然后写入了20KB的数据（上一篇文章讲到的写放大的概念）。
 
@@ -66,7 +66,7 @@ tags: [垃圾回收, 擦写均衡]
 
   回到上面写入12KB图片的例子，由于我们有了额外的4KB空间，再加上之前剩余的8KB，可以直接把这12KB写入了，如下图所示：
 
-  ![预留空间](/2020-07-19-flash_write_performance/4.png)
+  ![预留空间](/assets/images/2020-07-19-flash_write_performance/4.png)
 
   如果我们继续删除8KB，然后再写入8KB，又会遇到同样的问题。也就是说，预留空间只是延迟了这个问题。当然，预留空间越大（成本也越高），该问题出现的就越晚，但迟早会出现。（所以，需要垃圾回收策略。）
 
@@ -87,13 +87,13 @@ tags: [垃圾回收, 擦写均衡]
 
   如下图所示，当用户删除最左边page中的文档时，TF卡控制器收到TRIM命令，知道第一个page被删除，就把整个block读取到自己的cache中，然后清空第一个page，擦除整个block后再写回到TF卡。
 
-  ![TRIM](/2020-07-19-flash_write_performance/trim3.png)
+  ![TRIM](/assets/images/2020-07-19-flash_write_performance/trim3.png)
 
   这样做的后果是：删除操作耗时会增加，但是不会再影响后续的写入操作。
 
   比如当用户再写入12KB的数据时，这时候有3个空闲的page，可以直接写入，效率比之前有提升。
 
-  ![TRIM的效果](/2020-07-19-flash_write_performance/trim4.png)
+  ![TRIM的效果](/assets/images/2020-07-19-flash_write_performance/trim4.png)
 
   不过，TRIM只能减轻该问题，并不能彻底消除该问题。比如，当你修改一个已存在文件的时候就不能使用TRIM命令。这种场景下，仍然会遇到写性能下降的问题。
 
