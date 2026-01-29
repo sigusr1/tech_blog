@@ -60,7 +60,7 @@ libuv async工作原理如下图所示：
 - 用户在其他线程调用`uv_async_send`唤醒`event loop`线程
 - `event loop`线程执行`uv_async_t`绑定的回调函数
 
-![libuv async工作原理图](http://data.coderhuo.tech/2025-10-24-libuv_cpu_problem/libuv_cpu_spin-libuv_async_workflow.jpg)
+![libuv async工作原理图](/assets/images/2025-10-24-libuv_cpu_problem/libuv_cpu_spin-libuv_async_workflow.jpg)
 
 我们结合代码看下异步唤醒的流程。
 
@@ -195,14 +195,14 @@ static int uv__async_spin(uv_async_t* handle) {
 3. 最终的结果就是，uv__async_spin总耗时313ms，cpu空转183ms
 
 
-![libuv spin空转trace图](http://data.coderhuo.tech/2025-10-24-libuv_cpu_problem/uv_spin_trace.jpg)
+![libuv spin空转trace图](/assets/images/2025-10-24-libuv_cpu_problem/uv_spin_trace.jpg)
 
  > 出问题的平台io性能较差，write fd耗时较久，其他io性能好的平台未观察到该现象。
 {: .prompt-info }
 
 进一步设想下，这个问题在单cpu场景，或者进程被绑定到某个cpu的场景更容易出现。如下图所示，只要`event loop`线程在绿色区间被唤醒，都将做无效空转。
 
-![单cpu场景下spin空转](http://data.coderhuo.tech/2025-10-24-libuv_cpu_problem/libuv_cpu_spin-single_cpu.jpg)
+![单cpu场景下spin空转](/assets/images/2025-10-24-libuv_cpu_problem/libuv_cpu_spin-single_cpu.jpg)
 
 ## 3. 修改方案
 
