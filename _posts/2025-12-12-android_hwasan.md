@@ -79,12 +79,12 @@ HWASan的技术基础是[momory tagging](https://arxiv.org/pdf/1802.09517):
 - 指针p的值为`0x650000458e3d2780`，最高字节即TAG是0x65，访问内存的时候，用来和内存块实际的TAG做对比
 - 代码`p[32] = 'a'`中，指针p的TAG是0x65，访问的内存块的TAG是0x23，不匹配，HWASan终止程序
 - 思考下：`p[25] = 'a'`会导致程序崩溃吗？
-![HWASan检测内存越界的例子](http://data.coderhuo.tech/2025-12-12-android_hwasan/hwasan-heap_overflow.jpg)
+![HWASan检测内存越界的例子](/assets/images/2025-12-12-android_hwasan/hwasan-heap_overflow.jpg)
 
 ### 2.2 use after free的例子
 
 下图是个`use after free`的例子，内存释放后TAG会更新，再次使用会导致TAG不匹配，进而crash。
-![HWASan检测use after free的例子](http://data.coderhuo.tech/2025-12-12-android_hwasan/hwasan-use_after_free.jpg)
+![HWASan检测use after free的例子](/assets/images/2025-12-12-android_hwasan/hwasan-use_after_free.jpg)
 
 
 HWASan还可以监测栈上的非法内存使用，比如栈溢出、使用已失效的局部变量，原理是一样的，都是基于`momory tagging`机制。
@@ -142,7 +142,7 @@ distance between p1 and p2 is 3616
 write one byte to 0xb3000041e50335a0, which is between p2's range [0xb3000041e50335a0, 0xb3000041e50335c0)
 ```
 上述例子示意图如下所示：
-![HWASan漏检示意图](http://data.coderhuo.tech/2025-12-12-android_hwasan/hwasan-not_detect_problem.jpg)
+![HWASan漏检示意图](/assets/images/2025-12-12-android_hwasan/hwasan-not_detect_problem.jpg)
 
 ## 3. 题外话
 ### 3.1 HWASan捕获的是第一现场
@@ -166,10 +166,10 @@ int main() {
 Linux下gdb运行，crash在`delete[] p`这一行，实际上`*(p - 512 + i) = 0x0`才是真正的罪魁祸首。  
 也就是说，有些情况下踩内存的coredump，并不是第一现场。  
 上述demo很简单，可以一眼看出问题所在，但实际项目中，如果是跨模块/跨线程的踩内存，就很难排查了。
-![coredump堆栈不准确示意图](http://data.coderhuo.tech/2025-12-12-android_hwasan/wrong_pos_of_coredump.jpg)
+![coredump堆栈不准确示意图](/assets/images/2025-12-12-android_hwasan/wrong_pos_of_coredump.jpg)
 
 作为对比，HWASan就可以准确的抓到第一现场信息，提高了问题排查效率：
-![HWASan第一现场示意图](http://data.coderhuo.tech/2025-12-12-android_hwasan/write_pos_of_hwasan.jpg)
+![HWASan第一现场示意图](/assets/images/2025-12-12-android_hwasan/write_pos_of_hwasan.jpg)
 
 *Tips: Android平台编译上述demo时，需要加-O0编译选项，否则会被Clang优化掉。*
 
