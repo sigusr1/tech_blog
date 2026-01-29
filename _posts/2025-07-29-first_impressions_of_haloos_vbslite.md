@@ -17,19 +17,19 @@ tags:  [HaloOS, vbslite]
 在阅读代码期间发现不少规范性的问题，不知道是vbslite缺少统一的规范，还是有规范但执行不到位，下面举几个例子（部分问题已反馈给作者）：
 
 - `vbslitespace/examples/local_test/app_test.c`中变量未对齐：
-![变量未对齐](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/not_align_main_func.png)
+![变量未对齐](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/not_align_main_func.png)
 
 - `vbslitespace/mvbs/posix_aux/src/loop.c`操作符前后是否加空格风格不一致：
-![操作符前后是否加空格风格不一致](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/space_before_and_after_oprator.png)
+![操作符前后是否加空格风格不一致](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/space_before_and_after_oprator.png)
 
 - `vbslitespace/mvbs/src/adapter/posix/src/adapter_socket.c`中tab和space混用：
-![tab和space混用](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/mix_tab_space.png)
+![tab和space混用](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/mix_tab_space.png)
 
 - 下面这个[提交](https://gitee.com/haloos/vbslite_mvbs/commit/3f2328e8833074c909e2bc23b90653d60d0994f4)，提交说明形同虚设，不点进去看代码都不知道改了什么：
-![从提交说明看不出改了什么](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/not_kwnow_what_he_change.jpg)
+![从提交说明看不出改了什么](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/not_kwnow_what_he_change.jpg)
 
 - 下面这个[提交](https://gitee.com/haloos/vbslite_mvbs/commit/b0f1ce262becb0092f5ff95c6590c93a32528152)，**说是修改文档，结果一个文档没改，改了大量的代码**：
-![提交说明严重不符](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/update_docs_but_change_code.jpg)
+![提交说明严重不符](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/update_docs_but_change_code.jpg)
 
 
 ## 2. 线程模型
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 - socket io线程，处理socket收发事件
 - 定时器线程：严格来讲算不上定时器，只是定时唤醒用户线程
 
-![线程模型](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/thread_model.jpg)
+![线程模型](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/thread_model.jpg)
 
 函数`mvbs_event_loop_create`会创建上面提到的两个框架线程：
 - 定时器线程处理函数`timer_event_handle`是while循环加sleep实现的，每隔一段时间（用户设置的阈值）通过mvbs_event_send唤醒用户线程
@@ -105,9 +105,9 @@ struct mvbs_event_loop* mvbs_event_loop_create(uint32_t peroid_ms) {
 接下来以官方的rpc_test为例，看下数据收发流程。  
 基于dds的pub/sub数据收发流程类似，只是序列化/反序列化、Transport部分有差异，本文不再展开，后面看情况是否单写一篇。
 
-整体数据收发流程如下图所示([点击查看高清大图](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/rpc_data_flow.svg))，红色虚线左侧是client进程，右侧是server进程:
+整体数据收发流程如下图所示([点击查看高清大图](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/rpc_data_flow.svg))，红色虚线左侧是client进程，右侧是server进程:
 
-![rpc数据收发流程](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/rpc_data_flow.svg)
+![rpc数据收发流程](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/rpc_data_flow.svg)
 
 我们重点关注以下几点：
 - **socket线程**收到数据后，是先放在FIFO队列的，**用户线程**收到`MVBS_EV_TIMER`事件后消费数据(不知道为啥没监听`MVBS_EV_RECV`)。以server端为例，**socket线程**在第6步通过`adapter_socket_tcp_read`接收数据后，放到FIFO队列，**用户线程**在第9步通过`rpc_server_recv_loop`调用`rpc_connection_recv`，从FIFO中取数据。因为FIFO的生产者和消费者在不同的线程，所以要有锁保护。
@@ -161,7 +161,7 @@ struct mvbs_event_loop* mvbs_event_loop_create(uint32_t peroid_ms) {
 - socket通信用户态与内核态之间的拷贝（图中的1、2、5、6四处）
 - 进出FIFO的内存拷贝（图中的3、4、7、8四处）
 
-![rpc内存拷贝次数](http://data.coderhuo.tech/2025-07-29-first_impressions_of_haloos_vbslite/rpc_mem_operation.jpg)
+![rpc内存拷贝次数](/assets/images/2025-07-29-first_impressions_of_haloos_vbslite/rpc_mem_operation.jpg)
 
 上述这些拷贝，在RPC通信中都是中规中矩的，在本机IPC通信中通过其他方法存在优化的可能性（需要综合考虑系统调用的开销，比如数据量较大时使用memfd）。官方提到的零拷贝在vbslite版本中暂未看到，可能vbspro配合理想自己的vcos有这个特性，后面有时间再研究下。
 
