@@ -32,7 +32,7 @@ SLC是对电子数目做的一阶量化，所以一个晶体管可以代表两�
 
 也就是说，量化等级越高，一个晶体管可以表示的状态越多，存储密度就越大，同等数量的存储单元组成的存储介质，存储容量也越大。
 
-![晶体管电子数目量化示意图](/2020-07-18-flash_basics/slc-mlc-tlc-buckets.jpg)
+![晶体管电子数目量化示意图](/asseets/images/2020-07-18-flash_basics/slc-mlc-tlc-buckets.jpg)
 
 如上图所示，可以把晶体管比作水桶，晶体管内的电子比作水：
 
@@ -45,7 +45,7 @@ SLC是对电子数目做的一阶量化，所以一个晶体管可以代表两�
 从上面的原理可以看出，SLC、MLC、TLC的性能和寿命是递减的，存储密度是递增的。
 下面是一组具体的数据：
 
-![性能和寿命](/2020-07-18-flash_basics/slc-mlc-tlc-performance-chart.jpg)
+![性能和寿命](/asseets/images/2020-07-18-flash_basics/slc-mlc-tlc-performance-chart.jpg)
 
 
 从上图可以看出：
@@ -68,7 +68,7 @@ Flash中存在下面几个基本概念：package、die、plane、block、page(pa
 - 每个plane包含多**block*，block是最小擦除单元**。
 - 每个block包含多个**page， page是最小的读写单元**。
 
-![NAND Flash布局示意图](/2020-07-18-flash_basics/nand-flash-die-layout.png)
+![NAND Flash布局示意图](/asseets/images/2020-07-18-flash_basics/nand-flash-die-layout.png)
 
 
 这里我们需要重点关注的是：
@@ -78,7 +78,7 @@ Flash中存在下面几个基本概念：package、die、plane、block、page(pa
 - 每个block在写入前需要先擦除
 - block擦除前，需要保证本block上所有page中都不包含有效数据（如果有些page包含有效数据，需要先搬移到其他地方）
 
-![flash的最小操作单元](/2020-07-18-flash_basics/nand-flash-blocks-pages-program-erases.jpg)
+![flash的最小操作单元](/asseets/images/2020-07-18-flash_basics/nand-flash-blocks-pages-program-erases.jpg)
 
 
 ### Program/Erase Cycles
@@ -95,7 +95,7 @@ Flash芯片上block的擦写次数是有限的，最大擦写次数称为**PE Cy
 
 *说明：新的page和老的page可以位于同一个block，也可以位于不同的block，甚至位于不同的die。*
 
-![flash数据更新示意图](/2020-07-18-flash_basics/nand-flash-page-update.jpg)
+![flash数据更新示意图](/asseets/images/2020-07-18-flash_basics/nand-flash-page-update.jpg)
 
 这样做会带来另外的问题：
 
@@ -119,16 +119,16 @@ Flash芯片上block的擦写次数是有限的，最大擦写次数称为**PE Cy
 
 下面是逻辑地址和物理地址映射示意图：
 
-![逻辑地址和物理地址映射示意图](/2020-07-18-flash_basics/logical-physical-page-addressing.jpg)
+![逻辑地址和物理地址映射示意图](/asseets/images/2020-07-18-flash_basics/logical-physical-page-addressing.jpg)
 
 上图所示属于**page-to-page的映射，这种映射的缺点是FTL中维护大量的映射关系，好处是管理方便**（某个page更新时，不用关心新数据是否和原数据位于同一个block，如下图所示）。
 
-![page-to-page映射时的数据更新](/2020-07-18-flash_basics/logical-physical-page-update_page.jpg)
+![page-to-page映射时的数据更新](/asseets/images/2020-07-18-flash_basics/logical-physical-page-update_page.jpg)
 
 
 实际一般使用**block-to-block的映射**（这种情况下，逻辑page和物理page的映射是固定的，比如逻辑的page1对应物理的page1，逻辑的page2对应物理的page2），如下图所示：
 
-![LBA和PBA的映射](/2020-07-18-flash_basics/logical-physical-block-addressing.jpg)
+![LBA和PBA的映射](/asseets/images/2020-07-18-flash_basics/logical-physical-block-addressing.jpg)
 
 **block-to-block的映射，好处是维护的映射关系较少，节省了存储空间，缺点是在数据更新的时候比较麻烦**，如下图所示：
 
@@ -138,7 +138,7 @@ Flash芯片上block的擦写次数是有限的，最大擦写次数称为**PE Cy
 4. 步骤4更新FTL映射关系，指向新的block，然后擦除原来的block（具体什么时候擦除，由Flash内部的垃圾回收机制决定）
 
 
-![部分page更新](/2020-07-18-flash_basics/logical-physical-page-update.jpg)
+![部分page更新](/asseets/images/2020-07-18-flash_basics/logical-physical-page-update.jpg)
 
 block-to-block方式的映射，在数据更新的时候产生了额外的数据拷贝，需要付出的代价较高。为了解决这个问题，FAST、BAST等算法应运而生。
 
@@ -162,20 +162,20 @@ block-to-block方式的映射，在数据更新的时候产生了额外的数据
 
 我们假设一个简单的存储介质只包含5个block，每个block包含10个page。在初始化状态，所有的page都是空的，存储介质的可用空间是100%。
 
-![初始化状态](/2020-07-18-flash_basics/garbage-collection-fill11.jpg)
+![初始化状态](/asseets/images/2020-07-18-flash_basics/garbage-collection-fill11.jpg)
 
 接下来写入一些数据（注意：写入的最小单元是page）。从下图可以看出，有些page已经被占用了，并且由于磨损均衡算法的作用，他们被分散在不同的block上：
 
-![写入数据](/2020-07-18-flash_basics/garbage-collection-fill21.jpg)
+![写入数据](/asseets/images/2020-07-18-flash_basics/garbage-collection-fill21.jpg)
 
 
 我们再继续写入一些数据，现在50%的空间被占用了，并且数据分散在各个block上（尽管在物理层面数据是分散在各个block的，FTL对外展现的可能是连续的）：
 
-![继续写入数据](/2020-07-18-flash_basics/garbage-collection-fill31.jpg)
+![继续写入数据](/asseets/images/2020-07-18-flash_basics/garbage-collection-fill31.jpg)
 
 如果这时更新数据，FTL会选择一个空的page写入新数据，然后把老的page标记为stale状态（黄色标记块），如下图所示:
 
-![更新数据](/2020-07-18-flash_basics/garbage-collection-fill41.jpg)
+![更新数据](/asseets/images/2020-07-18-flash_basics/garbage-collection-fill41.jpg)
 
 
 这时最左边的block包含2个stale状态的page和4个used状态的page，为了回收stale状态的page，必须先把4个used状态的page拷贝到其他的block，然后再把最左边的block整个擦除掉。如果此时不执行该操作，继续写入新数据（或者更新现有数据），会耗尽所有free状态的page，尽管此时还存在stale状态的page，但是已经无法回收了（有效数据没法腾挪了），这时候整个存储介质会进入只读状态。
@@ -189,7 +189,7 @@ block-to-block方式的映射，在数据更新的时候产生了额外的数据
 
 这种现象叫做**写放大（Write Amplification）**，可以通过下面的公式衡量。该值越大说明效率越低，会对存储介质的性能和寿命造成不良影响：
 
-![写放大因子定义](/2020-07-18-flash_basics/write-amplification.jpg)
+![写放大因子定义](/asseets/images/2020-07-18-flash_basics/write-amplification.jpg)
 
 公式的分子是实际写入到Flash的数据量，分母是有效数据量。比如一次写入5KB数据，但是由于磨损均衡或者垃圾回收导致后台产生了数据搬运，实际写入数据量是10KB，那么，写放大因子就是2。
 
@@ -197,7 +197,7 @@ block-to-block方式的映射，在数据更新的时候产生了额外的数据
 
 一般情况下，存储介质的实际存储空间都大于标称空间(一般多7%左右，具体依赖生产商)，多出来的存储空间被称为预留空间（Over-Provisioning），这部分空间用户是无法使用的。它可以被用来进行数据腾挪，保证垃圾回收、擦写均衡的正常进行，如果有坏块产生，还可以作为替补block顶上去（在一定程度上，让用户感知不到坏块的存在）。
 
-![预留空间](/2020-07-18-flash_basics/garbage-collection-overprovision.jpg)
+![预留空间](/asseets/images/2020-07-18-flash_basics/garbage-collection-overprovision.jpg)
 
 
 ## 四、参考资料
