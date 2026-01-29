@@ -70,7 +70,7 @@ tags:  [capability, 安全]
 6. 上述程序通过getchar设置了两个暂停点，感兴趣的同学可以试下，是不是前半段能生成coredump，后半段就无法生成了。
 
 7. 这是因为setuid后，`dumpable`被设置成新用户`test`中`/proc/sys/fs/suid_dumpable`的值，参考[ptrace(2)](http://man.he.net/man2/prctl):  
-![dumpable flag受用户变更影响](http://data.coderhuo.tech/2022-10-01-setuid_not_gen_coredump/dumpable_change_small.jpg)
+![dumpable flag受用户变更影响](/assets/images/2022-10-01-setuid_not_gen_coredump/dumpable_change_small.jpg)
 8. 通过下面的命令可以查看用户`test`中`/proc/sys/fs/suid_dumpable`的值，我的设备上确实是0（不同系统可能有差异）
     ```
     su test
