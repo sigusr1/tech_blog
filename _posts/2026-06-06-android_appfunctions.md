@@ -250,7 +250,7 @@ public class MyAppFunctionService extends AppFunctionService {
 
 - **`BIND_APP_FUNCTION_SERVICE` 权限**：框架要求必须声明这个系统权限，这又决定了**【只有系统应用才能调用该service】**
 - **Intent Filter Action**：AppsIndexerManagerService 通过这个 Action 发现你的服务
-- **两个 property**：分别指向 3.1 节的 Schema 定义文件和 3.2 节的函数定义文件，AppsIndexerManagerService 读取它们来构建索引
+- **两个 property**：分别指向 4.1 节的 Schema 定义文件和 4.2 节的函数定义文件，AppsIndexerManagerService 读取它们来构建索引
 
 ```xml
 <service
