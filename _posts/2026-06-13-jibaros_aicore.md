@@ -6,7 +6,7 @@ tags:  [AICore]
 ---
 
 
-> **JibarOS** — 基于 Android 16 的开源操作系统，将端侧 AI 推理内置为平台级共享服务。
+> **JibarOS** — 基于 Android 16 的AICore开源实现方案，将端侧 AI 推理内置为平台级共享服务。麻雀虽小五脏俱全，OEM厂商可以直接拿来做POC了。
 >
 > 代码仓库：https://github.com/Jibar-OS/JibarOS
 
@@ -92,6 +92,8 @@ OpenIntelligence.text.completeStream("用一句话总结这段文字：…")
 | **API能力** | 精选集（5 种） | 12 种能力，OEM 可扩展 |
 | **硬件要求** | 特定旗舰 SoC | 任意 ARM/x86 设备 |
 | **模型更新** | Play System Updates | 构建时预置于系统分区 |
+
+> JibarOS不具备模型独立更新能力，这点和AICore相比是个弱项。
 
 ---
 
