@@ -6,9 +6,7 @@ tags:  [AICore]
 ---
 
 
-> **JibarOS** — 基于 Android 16 的AICore开源实现方案，将端侧 AI 推理内置为平台级共享服务。麻雀虽小五脏俱全，OEM厂商可以直接拿来做POC了。
->
-> 代码仓库：https://github.com/Jibar-OS/JibarOS
+> **[JibarOS](https://github.com/Jibar-OS/JibarOS)** — 基于 Android 16 的AICore开源实现方案，将端侧 AI 推理内置为平台级共享服务。麻雀虽小五脏俱全，OEM厂商可以直接拿来做POC了。
 
 ---
 
@@ -28,7 +26,7 @@ Google 在 Android 14 引入了 **AICore**，在 [I/O 2026](https://developer.an
 
 ### 2.1 AICore 是什么
 
-AICore 是 Google 提供的**系统级 AI 服务**，以 `com.google.android.aicore` 为包名通过 Play Store 分发，负责 Gemini Nano 模型的下载、版本管理和推理执行。应用不需要自带模型，通过 ML Kit GenAI APIs 调用即可——AICore 在系统侧统一处理模型加载、硬件加速路由（NPU/GPU/CPU）和内存管理。
+AICore 是 Google 提供的**系统级 AI 服务**，以 `com.google.android.aicore` 为包名通过 Play Store 分发，负责 Gemini Nano 模型的下载、版本管理和推理执行。应用不需要自带模型，通过 ML Kit GenAI APIs 调用即可——AICore 在系统侧统一处理模型加载、硬件加速（NPU/GPU/CPU）和内存管理。
 
 **AICore 架构**（来源：[Android 官方文档](https://developer.android.com/ai/gemini-nano)）如下，核心设计：
 1. **模型实例共享** — 模型在系统进程中仅加载一次，多应用共享，避免每个 App 各自打包数 GB 的模型
