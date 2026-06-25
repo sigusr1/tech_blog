@@ -21,7 +21,7 @@ error: cannot connect to daemon
 
 报错信息丢给AI，AI很快诊断出是因为adb在创建server时使用了AF_INET6（IPv6），而我的ubuntu不支持IPv6。
 
-为了解决这个问题，它首先查看了查看了adb的help信息，看能不能设置只监听IPv4，没成功。
+为了解决这个问题，它首先查看了adb的help信息，看能不能设置只监听IPv4，没成功。
 
 接下来它尝试写个动态库interceptor.so，动态库中hook系统函数socket和bind，强制使用IPv4，以`LD_PRELOAD=./interceptor.so adb`方式运行，这个思路是对的，但是用起来有点麻烦，而且要在我的ubuntu上下载Android交叉编译工具链，被我阻止了。
 
