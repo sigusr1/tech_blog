@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="800" viewBox="0 0 1500 800" role="img" aria-labelledby="tls_server_auth_handshake-title tls_server_auth_handshake-desc">
+<title id="tls_server_auth_handshake-title">TLS 1.2 单向认证握手流程</title>
+<desc id="tls_server_auth_handshake-desc">客户端发起连接并协商参数，服务端下发证书，客户端验证证书链、目标服务标识与有效期，并通过后续握手确认服务端持有对应私钥，密钥交换完成后建立加密通道；客户端身份由上层认证。</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0 0 L10 5 L0 10 z" fill="#55606C"/>
+</marker>
+</defs>
+<g font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+
+<rect x="110" y="50" width="340" height="120" rx="12" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2.5"/>
+<text x="280" y="122" font-size="34" fill="#1D4A31" text-anchor="middle">客户端</text>
+
+<rect x="1050" y="50" width="340" height="120" rx="12" fill="#E4EFF9" stroke="#3E86C6" stroke-width="2.5"/>
+<text x="1220" y="122" font-size="34" fill="#1B466A" text-anchor="middle">服务端</text>
+
+<line x1="280" y1="170" x2="280" y2="640" stroke="#55606C" stroke-width="2" stroke-dasharray="10 10" opacity="0.45"/>
+<line x1="1220" y1="170" x2="1220" y2="640" stroke="#55606C" stroke-width="2" stroke-dasharray="10 10" opacity="0.45"/>
+
+<line x1="280" y1="240" x2="1220" y2="240" stroke="#55606C" stroke-width="3" marker-end="url(#ah)"/>
+<text x="750" y="222" font-size="26" fill="#3C4650" text-anchor="middle">① 发起连接，协商协议版本与加密套件</text>
+
+<line x1="1220" y1="320" x2="280" y2="320" stroke="#55606C" stroke-width="3" marker-end="url(#ah)"/>
+<text x="750" y="302" font-size="26" fill="#3C4650" text-anchor="middle">② 下发服务端证书</text>
+
+<rect x="60" y="360" width="460" height="96" rx="10" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<text x="290" y="400" font-size="24" fill="#6A4E10" text-anchor="middle">③ 验证服务端证书链、有效期与用途</text>
+<text x="290" y="434" font-size="24" fill="#6A4E10" text-anchor="middle">通过握手确认服务端持有对应私钥</text>
+
+<line x1="280" y1="540" x2="1220" y2="540" stroke="#55606C" stroke-width="3" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="750" y="522" font-size="26" fill="#3C4650" text-anchor="middle">④ 密钥交换完成，交换 Finished 建立加密通道</text>
+
+<polygon points="720,682 780,682 750,650" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<rect x="280" y="680" width="940" height="80" rx="12" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<rect x="720" y="677" width="60" height="6" fill="#FCF3DA"/>
+<text x="750" y="729" font-size="26" fill="#6A4E10" text-anchor="middle">客户端是谁，TLS 层不管——服务端靠账号、token 等上层手段识别客户端</text>
+
+</g>
+</svg>

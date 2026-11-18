@@ -16,13 +16,13 @@ order: 4
 ## 文章汇总
 
 {: .prompt-tip }
-> 本站自 2015 年起持续记录，共 **69 篇**原创技术文章，分为以下 11 类：
+> 本站自 2015 年起持续记录，共 **70 篇**原创技术文章，分为以下 11 类：
 >
 > - AI 工程化（6 篇）
 > - Android / AOSP（8 篇）
 > - Linux 系统编程与问题定位（10 篇）
 > - 虚拟内存专题（6 篇）
-> - 网络与协议（7 篇）
+> - 网络与协议（8 篇）
 > - 车载以太网与自动驾驶中间件（6 篇）
 > - 编程语言与软件设计（10 篇）
 > - 编译、链接与工具链（6 篇）
@@ -72,9 +72,10 @@ order: 4
 - [第四篇：malloc, heap & the program break](/posts/Virtual_Memory_malloc_and_heap/) `2017`
 - [第五篇：The Stack, registers and assembly code](/posts/Virtual_Memory_malloc_and_heap_stack_and_register/) `2019`
 
-### 网络与协议（7 篇）
+### 网络与协议（8 篇）
 
 - [libcurl blind sleep 导致的耗时问题](/posts/libcurl_sleep_problem/) `2026`
+- [车云通信怎么互认身份：双向认证与一车一密](/posts/vehicle_cloud_mtls/) `2026`
 - [分析 RTP 码流卡顿问题的工具](/posts/rtp_parse_tool/) `2018`
 - [利用空口抓包分析 Wi-Fi 问题](/posts/wifi_package_capture/) `2018`
 - [TCP 连接建立、断开过程详解](/posts/tcp_establish_release/) `2018`

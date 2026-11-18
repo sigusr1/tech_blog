@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="business_certificate_enrollment_and_access-title business_certificate_enrollment_and_access-desc">
+<title id="business_certificate_enrollment_and_access-title">首次领证与接入：从出厂身份到业务身份</title>
+<desc id="business_certificate_enrollment_and_access-desc">首次领证与接入包含①至⑦七步：设备用出厂身份与车厂证书申请审核服务（RA）建立 mTLS 连接，生成业务密钥并通过该连接提交 CSR，RA 核验资格与车辆归属，业务 CA 返回业务证书，设备关联业务私钥后用业务身份与业务入口建立 mTLS 连接；两套私钥都不上传。</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0 0 L10 5 L0 10 z" fill="#55606C"/>
+</marker>
+</defs>
+<g font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-weight="500">
+
+<line x1="300" y1="104" x2="300" y2="616" stroke="#55606C" stroke-width="2" stroke-dasharray="8 8" opacity="0.35"/>
+<line x1="900" y1="104" x2="900" y2="616" stroke="#55606C" stroke-width="2" stroke-dasharray="8 8" opacity="0.35"/>
+<line x1="300" y1="164" x2="900" y2="164" stroke="#55606C" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<line x1="300" y1="320" x2="900" y2="320" stroke="#55606C" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="900" y1="452" x2="300" y2="452" stroke="#55606C" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#ah)"/>
+<line x1="300" y1="608" x2="900" y2="608" stroke="#55606C" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+
+<text x="600" y="144" font-size="22" fill="#3C4650" text-anchor="middle">① 用出厂身份与RA建立mTLS连接</text>
+<text x="600" y="300" font-size="22" fill="#3C4650" text-anchor="middle">③ 经步骤①建立的连接提交业务证书申请（CSR）</text>
+<text x="600" y="432" font-size="22" fill="#3C4650" text-anchor="middle">⑤ 业务 CA 签发并返回业务证书</text>
+<text x="600" y="588" font-size="22" fill="#3C4650" text-anchor="middle">⑦ 用业务身份与业务入口建立mTLS连接</text>
+
+<rect x="180" y="24" width="240" height="80" rx="8" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2"/>
+<text x="300" y="56" font-size="28" font-weight="600" fill="#1D4A31" text-anchor="middle">车载设备</text>
+<text x="300" y="88" font-size="20" fill="#1D4A31" text-anchor="middle">SE / TEE</text>
+<rect x="780" y="24" width="240" height="80" rx="8" fill="#E4EFF9" stroke="#3E86C6" stroke-width="2"/>
+<text x="900" y="56" font-size="28" font-weight="600" fill="#1B466A" text-anchor="middle">云端</text>
+<text x="900" y="88" font-size="20" fill="#1B466A" text-anchor="middle">RA / 业务 CA / 业务入口</text>
+
+<rect x="176" y="188" width="248" height="72" rx="8" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2"/>
+<text x="300" y="216" font-size="22" fill="#1D4A31" text-anchor="middle">② 生成业务密钥对</text>
+<text x="300" y="244" font-size="20" fill="#1D4A31" text-anchor="middle">业务私钥不可导出</text>
+<rect x="780" y="344" width="240" height="48" rx="8" fill="#E4EFF9" stroke="#3E86C6" stroke-width="2"/>
+<text x="900" y="376" font-size="22" fill="#1B466A" text-anchor="middle">④ RA核验设备身份</text>
+<rect x="132" y="476" width="336" height="72" rx="8" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2"/>
+<text x="300" y="504" font-size="22" fill="#1D4A31" text-anchor="middle">⑥ 关联业务证书与业务私钥</text>
+<text x="300" y="532" font-size="20" fill="#1D4A31" text-anchor="middle">业务身份：业务证书 + 业务私钥</text>
+
+<rect x="264" y="640" width="672" height="56" rx="8" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2"/>
+<text x="600" y="676" font-size="22" fill="#6A4E10" text-anchor="middle">出厂身份用于领证，业务身份用于接入；两套私钥都不上传</text>
+
+</g>
+</svg>

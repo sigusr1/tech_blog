@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="mtls_mutual_auth_handshake-title mtls_mutual_auth_handshake-desc">
+<title id="mtls_mutual_auth_handshake-title">TLS 1.2 双向认证握手流程</title>
+<desc id="mtls_mutual_auth_handshake-desc">客户端发起连接，服务端下发证书，客户端验证服务端身份，服务端随后请求并验证客户端证书与签名，双方交换 Finished 建立加密通道；客户端证书在加密前明文发出。</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0 0 L10 5 L0 10 z" fill="#55606C"/>
+</marker>
+</defs>
+<g font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+
+<rect x="110" y="50" width="340" height="120" rx="12" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2.5"/>
+<text x="280" y="122" font-size="34" fill="#1D4A31" text-anchor="middle">客户端</text>
+
+<rect x="1050" y="50" width="340" height="120" rx="12" fill="#E4EFF9" stroke="#3E86C6" stroke-width="2.5"/>
+<text x="1220" y="122" font-size="34" fill="#1B466A" text-anchor="middle">服务端</text>
+
+<line x1="280" y1="170" x2="280" y2="840" stroke="#55606C" stroke-width="2" stroke-dasharray="10 10" opacity="0.45"/>
+<line x1="1220" y1="170" x2="1220" y2="840" stroke="#55606C" stroke-width="2" stroke-dasharray="10 10" opacity="0.45"/>
+
+<line x1="280" y1="230" x2="1220" y2="230" stroke="#55606C" stroke-width="3" marker-end="url(#ah)"/>
+<text x="750" y="212" font-size="26" fill="#3C4650" text-anchor="middle">① 发起连接，协商协议版本与加密套件</text>
+
+<line x1="1220" y1="310" x2="280" y2="310" stroke="#55606C" stroke-width="3" marker-end="url(#ah)"/>
+<text x="750" y="292" font-size="26" fill="#3C4650" text-anchor="middle">② 下发服务端证书</text>
+
+<rect x="60" y="340" width="460" height="96" rx="10" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<text x="290" y="380" font-size="24" fill="#6A4E10" text-anchor="middle">③ 验证服务端证书链、有效期与用途</text>
+<text x="290" y="414" font-size="24" fill="#6A4E10" text-anchor="middle">通过握手确认服务端持有对应私钥</text>
+
+<rect x="60" y="450" width="1380" height="310" rx="12" fill="#FCF3DA" opacity="0.45"/>
+<rect x="90" y="466" width="470" height="52" rx="8" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<text x="325" y="500" font-size="26" fill="#6A4E10" text-anchor="middle">比普通 TLS 多一段：客户端认证</text>
+
+<line x1="1220" y1="570" x2="280" y2="570" stroke="#55606C" stroke-width="3" marker-end="url(#ah)"/>
+<text x="750" y="552" font-size="26" fill="#3C4650" text-anchor="middle">④ CertificateRequest：要求客户端出示证书</text>
+
+<line x1="280" y1="650" x2="1220" y2="650" stroke="#55606C" stroke-width="3" marker-end="url(#ah)"/>
+<text x="750" y="632" font-size="26" fill="#3C4650" text-anchor="middle">⑤ 出示客户端证书，并用私钥签名握手数据</text>
+
+<rect x="920" y="662" width="520" height="96" rx="10" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<text x="1180" y="702" font-size="24" fill="#6A4E10" text-anchor="middle">⑥ 验证客户端证书链、有效期与用途</text>
+<text x="1180" y="736" font-size="24" fill="#6A4E10" text-anchor="middle">校验签名，认证客户端身份</text>
+
+<line x1="280" y1="840" x2="1220" y2="840" stroke="#55606C" stroke-width="3" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="750" y="822" font-size="26" fill="#3C4650" text-anchor="middle">⑦ 交换 Finished 建立加密通道；验证失败则拒绝连接</text>
+
+<polygon points="720,912 780,912 750,880" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<rect x="320" y="910" width="860" height="64" rx="12" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2.5"/>
+<rect x="720" y="907" width="60" height="6" fill="#FCF3DA"/>
+<text x="750" y="951" font-size="26" fill="#6A4E10" text-anchor="middle">双向认证不等于业务授权，仍需核验车辆注册与授权状态</text>
+
+</g>
+</svg>

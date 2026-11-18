@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="852" viewBox="0 0 1200 852" role="img" aria-labelledby="factory_identity_provisioning-title factory_identity_provisioning-desc">
+<title id="factory_identity_provisioning-title">生产准备：建立出厂身份与车辆绑定</title>
+<desc id="factory_identity_provisioning-desc">生产准备包含①至⑥六步：生产系统登记设备与车辆的绑定，设备生成出厂密钥对，云端获得归属记录，设备提交出厂公钥与 CSR，生产系统核验设备身份与 CSR，制造方 CA 签发并配置出厂证书；出厂私钥不导出。</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0 0 L10 5 L0 10 z" fill="#55606C"/>
+</marker>
+</defs>
+<g font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-weight="500">
+
+<line x1="220" y1="176" x2="220" y2="800" stroke="#55606C" stroke-width="2" stroke-dasharray="8 8" opacity="0.35"/>
+<line x1="600" y1="176" x2="600" y2="800" stroke="#55606C" stroke-width="2" stroke-dasharray="8 8" opacity="0.35"/>
+<line x1="980" y1="176" x2="980" y2="800" stroke="#55606C" stroke-width="2" stroke-dasharray="8 8" opacity="0.35"/>
+<line x1="220" y1="412" x2="980" y2="412" stroke="#55606C" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="600" y1="508" x2="220" y2="508" stroke="#55606C" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="220" y1="744" x2="600" y2="744" stroke="#55606C" stroke-width="2.5" marker-end="url(#ah)"/>
+
+<text x="790" y="386" font-size="22" fill="#3C4650" text-anchor="middle">③ 提供生产信息供 RA 查询</text>
+<text x="410" y="460" font-size="22" fill="#3C4650" text-anchor="middle">④ 提交出厂公钥</text>
+<text x="410" y="488" font-size="20" fill="#3C4650" text-anchor="middle">出厂 CSR；出厂私钥签名</text>
+<text x="410" y="696" font-size="22" fill="#3C4650" text-anchor="middle">⑥ 制造方签发并配置出厂证书</text>
+<text x="410" y="724" font-size="20" fill="#3C4650" text-anchor="middle">证书绑定设备序列号与出厂公钥</text>
+
+<rect x="56" y="96" width="328" height="80" rx="8" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2"/>
+<text x="220" y="144" font-size="28" font-weight="600" fill="#6A4E10" text-anchor="middle">生产系统 / 制造方 CA</text>
+<rect x="436" y="96" width="328" height="80" rx="8" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2"/>
+<text x="600" y="128" font-size="28" font-weight="600" fill="#1D4A31" text-anchor="middle">车载设备</text>
+<text x="600" y="160" font-size="20" fill="#1D4A31" text-anchor="middle">SE / TEE</text>
+<rect x="816" y="96" width="328" height="80" rx="8" fill="#E4EFF9" stroke="#3E86C6" stroke-width="2"/>
+<text x="980" y="128" font-size="28" font-weight="600" fill="#1B466A" text-anchor="middle">云端</text>
+<text x="980" y="160" font-size="20" fill="#1B466A" text-anchor="middle">RA</text>
+
+<rect x="56" y="200" width="328" height="64" rx="8" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2"/>
+<text x="220" y="226" font-size="22" fill="#6A4E10" text-anchor="middle">① 登记设备与车辆</text>
+<text x="220" y="252" font-size="20" fill="#6A4E10" text-anchor="middle">设备序列号 → 车辆 VIN</text>
+<rect x="436" y="280" width="328" height="64" rx="8" fill="#E4F3E9" stroke="#3E9C68" stroke-width="2"/>
+<text x="600" y="306" font-size="22" fill="#1D4A31" text-anchor="middle">② 设备内生成出厂密钥对</text>
+<text x="600" y="332" font-size="20" fill="#1D4A31" text-anchor="middle">出厂私钥不可导出</text>
+<rect x="56" y="576" width="328" height="48" rx="8" fill="#FCF3DA" stroke="#D9A33B" stroke-width="2"/>
+<text x="220" y="608" font-size="22" fill="#6A4E10" text-anchor="middle">⑤ 核验设备身份与 CSR</text>
+<rect x="400" y="764" width="400" height="32" rx="4" fill="#E4F3E9"/>
+<text x="600" y="786" font-size="20" fill="#1D4A31" text-anchor="middle">出厂身份：出厂证书 + 出厂私钥</text>
+
+</g>
+</svg>
